@@ -1,0 +1,21 @@
+Topics Proposed.
+1. Personalised Feed generator
+2. Daily Radio (Based on Favourites)
+
+Technologies Used
+
+1. Git
+2. Sqlite3
+3. Python3 (Mostly Backend, may be with CGI)
+4. Html5 with Javascript (Frontend)
+
+Criteria For Project
+
+1. A mini project
+2. Change defalt formats..
+3. Use as many query types as possible (eg. case, union, intersect etc)
+
+Relations (subject to modification)
+1. Profile
+2. Credentials ( Username, MD5hash of password )
+3. Track Record of Person ( Set of tags )
