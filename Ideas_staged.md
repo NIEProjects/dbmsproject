@@ -1,34 +1,38 @@
 #Topics Proposed.
 
-1. Personalised Feed generator
-2. Daily Radio (Based on Favourites)
+An online music streaming platform with the following features : 
 
-#Etymology
+1. Music divided by genres
+2. Option to create your playlist
+3. Option to search music based on various filters like genre,language etc.
+4. Recently played songs
 
-1. My Radio
-2. Nanna Radio ( In Kannada )
+#Technologies Used (tentative)
 
-#Technologies Used
-
-1. Git
-2. Sqlite3
-3. Python3 (Mostly Backend, may be with CGI)
-4. Html5 with Javascript (Frontend)
-5. Inkscape (Drawing E-R Diagrams)
+1. Git : Code management
+2. Sqlite3 : DBMS
+3. Python3 : Mostly Backend, may be with CGI
+4. HTML5, CSS3 and Javascript : Frontend
+5. Inkscape : Drawing E-R Diagrams
 
 #Criteria For Project
 
-1. A mini project
-2. Change defalt formats..
-3. Use as many query types as possible (eg. case, union, intersect etc)
+A mini project with the following goals : 
+
+1. Using multiple tables to store different kinds of data
+2. Using different types of relations 
+3. Using a variety of relational concepts like joins,indexes, intersect etc.
+4. Maintaining efficient queries
+5. Implementing advanced SQL concepts to better use and store the data
 
 #Features
 
-1. Developer Mode and User mode
-2. Listen or Buy songs
-3. Get enriched with daily quotes.
-4. Free registration
-5. Register with minimum details and then update profile
+1. Login
+2. Personal playlist
+3. recently played
+4. Bookmarked/Favourites list
+5. Listen or Buy songs
+6. Developer and User mode
 
 #Relations
 
