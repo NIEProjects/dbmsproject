@@ -2,7 +2,7 @@
 
 An online music streaming platform with the following features : 
 
-1. Music divided by genres
+1. Music divided by genres, artists, albums etc.
 2. Option to create your playlist
 3. Option to search music based on various filters like genre,language etc.
 4. Recently played songs
