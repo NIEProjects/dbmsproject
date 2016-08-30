@@ -25,11 +25,11 @@ A mini project with the following goals :
 4. Maintaining efficient queries
 5. Implementing advanced SQL concepts to better use and store the data
 
-#Features
+#Features (from developers point of view)
 
 1. Login
 2. Personal playlist
-3. recently played
+3. Recently played
 4. Bookmarked/Favourites list
 5. Listen or Buy songs
 6. Developer and User mode
@@ -39,7 +39,7 @@ A mini project with the following goals :
 STD: Relation names begin with capital letter
 	 Column names begin with small letter and separated by underscore incase of composite name
 
-1. `Profile`(user_id(PK), username, first_name, last_name, date_of_birth, language, city(FK), state(FK), _favourites_(TODO))
+1. `Profile`(user_id(PK), username, first_name, last_name, date_of_birth, language, city(FK), state(FK), _favourites_(multivalued attribue))
 2. `Credentials` (username, MD5hash of password)
 3. `Songs`(id(PK), name, singer, film, genre, language, duration, price, popularity, url, copies_sold)
 4. `Playlist`(song_id, song_name, duration) --> View
