@@ -39,18 +39,16 @@ A mini project with the following goals :
 STD: Relation names begin with capital letter
 	 Column names begin with small letter and separated by underscore incase of composite name
 
-1. `Profile`(user_id(PK), username, first_name, last_name, date_of_birth, language, city(FK), state(FK), _favourites_(multivalued attribue))
+1. `UserProfile`(user_id(PK), username, first_name, last_name, date_of_birth, language, city(FK), state(FK), _favourites_(multivalued attribue))
 2. `Credentials` (username, MD5hash of password)
 3. `Songs`(id(PK), name, singer, film, genre, language, duration, price, popularity, url, copies_sold)
 4. `Playlist`(song_id, song_name, duration) --> View
-5. `Favourites`(user_id(FK), genre(FK), language)
+5. `Favourites`(user_id(FK), genre, language)
 6. `Quotes`(quote, personality)
 7. `OrderInfo`(order_id,user_id(FK),song_id(FK),date_of_order)
 8. `ActiveUsers`(user_id(FK)) --> View using Union
 9. `InactiveUsers`(user_id(FK)) --> View using difference
 10. `Freebirds`(user_id(FK))  --> View using difference
-11. `Cities`(city_name(PK))
-12. `States`(state_name(PK))
 
 PS: Popularity is an integer value for the number of times played.
 
