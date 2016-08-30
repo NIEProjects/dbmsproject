@@ -1,3 +1,7 @@
+#DBMS Project
+##ನನ್ನ Radio
+##Nanna Radio
+
 #Topics Proposed.
 
 An online music streaming platform with the following features : 
@@ -7,7 +11,7 @@ An online music streaming platform with the following features :
 3. Option to search music based on various filters like genre,language etc.
 4. Recently played songs
 
-#Technologies Used (tentative)
+#Technologies Used
 
 1. Git : Code management
 2. Sqlite3 : DBMS
