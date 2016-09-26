@@ -13,11 +13,11 @@ An online music streaming platform with the following features :
 
 #Technologies Used
 
-1. Git : Code management
-2. Sqlite3 : DBMS
-3. Python3 : Mostly Backend, may be with CGI
-4. HTML5, CSS3 and Javascript : Frontend
-5. Inkscape : Drawing E-R Diagrams
+1. Git 				: Code management
+2. Sqlite			: DBMS
+3. Python3 			: Mostly Backend, may be with CGI
+4. HTML5, CSS3 and Javascript 	: Frontend
+5. Inkscape 			: Drawing E-R Diagrams
 
 #Criteria For Project
 
