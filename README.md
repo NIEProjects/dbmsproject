@@ -53,8 +53,7 @@ STD: Relation names begin with capital letter
 8. `ActiveUsers`(user_id(FK)) --> View using Union
 9. `InactiveUsers`(user_id(FK)) --> View using difference
 10. `Freebirds`(user_id(FK))  --> View using difference
-11. `City`(city_name(PK))
-12. `State`(state_name(PK))
+11. `Places`(city_name(PK),state_name)
 
 PS: Popularity is an integer value for the number of times played.
 
