@@ -12,6 +12,7 @@ places_raw = csv.reader(places_file)
 
 data = []
 listOfPlaces = []
+#listOfPlaces is an intermediate list used to eliminate duplicates
 
 for row in places_raw:
     r = row[0].split('\t')
@@ -21,20 +22,15 @@ for row in places_raw:
     else:
         print(r[0] + " is repeated")
 
-
 for row in data:
-    a=[]
+    a = []
     tmp = tuple(row)
     a.append(tmp)
-    print(a)    
-    
-cur.executemany("insert into Places values(?,?)",a)
-#cur.executemany("insert into Places values(?,?)",data)
-    
-
+    print(a)        
+    cur.executemany("insert into Places values(?,?)",a)
+        
 """for row in data:
     print(row)
 """
 conn.commit()
 #this commit is to insert into Places
-
