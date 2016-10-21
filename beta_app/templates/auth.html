@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nanna Radio</title>
+		<style type="text/css">
+			*{
+				text-align: center;
+			}
+			.container{
+				text-align: center;
+				border: 1px solid black;
+			}
+		</style>
+
+	</head>
+	<body>
+		<h1>Please login to continue</h1>
+		<div class="container">
+			<!-- <form name="loginForm"> -->
+				<div>
+					Email : <input type="email" id = "username" name="user" required>
+				</div>
+				<div>
+					Password : <input type="password" id="password" required>
+				</div>
+				<div>
+					<button onclick="login()">Log In</button>
+				</div>
+			<!-- </form> -->
+			<div id="response">Waiting for response</div>
+		</div>
+				<script type="text/javascript">
+			function login () {
+				// var username = document.getElementById('username').value,
+				// 	password = document.getElementById('password').value,
+				var	res = document.getElementById('response'),
+					xhr = new XMLHttpRequest();
+				
+				var params = {
+					username : 'sanad',
+					password : 'password'
+				};
+				//Opening and sending a XHR request
+				xhr.open('POST','/login',true);
+				xhr.send(JSON.stringify(params));
+
+					xhr.onreadystatechange = function(){
+					if(xhr.readyState == 4 && xhr.status == 200){
+						// res.innerHTML = this.responseText;
+						// console.log(JSON.stringify(this.responseText));
+						console.log("testINg");
+					
+					console.log(xhr);
+					res.innerHTML = xhr.responseText;
+					}
+				}
+
+			
+
+
+			}
+		</script>
+	</body>
+</html>
