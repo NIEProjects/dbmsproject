@@ -1,5 +1,7 @@
 Enable Foreign keys
 PRAGMA foreign_keys=True;
 
+zip can be used in cursor.executemany()
+
 How to know whether a query is using INDEX or not?
 explain query plan select * from Places where state_name like "Kar%";

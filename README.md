@@ -4,7 +4,7 @@
 
 #Topics Proposed.
 
-An online music streaming platform with the following features : 
+An online music streaming platform with the following features :
 
 1. Music divided by genres, artists, albums etc.
 2. Option to create your playlist
@@ -21,10 +21,10 @@ An online music streaming platform with the following features :
 
 #Criteria For Project
 
-A mini project with the following goals : 
+A mini project with the following goals :
 
 1. Using multiple tables to store different kinds of data
-2. Using different types of relations 
+2. Using different types of relations
 3. Using a variety of relational concepts like joins,indexes, intersect etc.
 4. Maintaining efficient queries
 5. Implementing advanced SQL concepts to better use and store the data
@@ -41,19 +41,21 @@ A mini project with the following goals :
 #Relations
 
 STD: Relation names begin with capital letter
-	 Column names begin with small letter and separated by underscore incase of composite name
+	 Column names begin with small letter and separated by underscore in case of composite name
 
-1. `UserProfile`(user_id(PK), username, first_name, last_name, date_of_birth, language, city(FK), state(FK), _favourites_(multivalued attribue))
-2. `Credentials` (username, MD5hash of password)
-3. `Songs`(song_id(PK), name, composer/band, film/album, genre, language, duration, price, popularity/rating, url, copies_sold)
+1. `UserProfile`(user_id(PK), username, first_name, last_name, date_of_birth, city(FK), state(FK), _favourites_(multivalued attribue))
+2. `Credentials` (user_id(FK), username(FK), MD5hash of password)
+3. `Songs`(song_id(PK), name, singer, film/album, genre, duration, price, popularity/rating, url, copies_sold)
 4. `Playlist`(user_id, song_id, song_name, duration) --> View
-5. `Favourites`(user_id(FK), genre, language)
-6. `Quotes`(quote, personality)
+5. `FavouriteGenres`(user_id(FK), genre)
+6. `Quotes`(quote_id, quote, personality)
 7. `OrderInfo`(order_id,user_id(FK),song_id(FK),date_of_order)
 8. `ActiveUsers`(user_id(FK)) --> View using Union
 9. `InactiveUsers`(user_id(FK)) --> View using difference
 10. `Freebirds`(user_id(FK))  --> View using difference
-11. `Places`(city_name(PK),state_name)
+11. `Places`(city_name(PK),state_name(FK))
+12. `States`(state_name(PK))
+13. `SongTags`(song_id int(20)(FK), tag TEXT)
 
 PS: Popularity is an integer value for the number of times played.
 
@@ -69,11 +71,11 @@ PS: Popularity is an integer value for the number of times played.
 ##Union (Left, Full)
 Active users are those who have either listened to a song or bought a song.
 
-##Intersect 
+##Intersect
 Users who have listened to a song as well as bought a song (need not be the same song)
 
 ##Join
-Join `Profile` with `Favourites` and get the details of person 
+Join `UserProfile` with `FavouriteGenres` and get the details of person
 
 ##Difference
 `InactiveUsers`  = All users - Active users
