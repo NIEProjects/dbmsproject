@@ -14,6 +14,7 @@ def authpage():
 @app.route('/login', methods=['POST'])
 def logininfo():
 	data = loads(request.data)
+	print data
 	if data['username']:
 		return redirect('/home/'+data['username'])
 	else:
