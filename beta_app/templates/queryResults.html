@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Song Query Results</title>
+</head>
+<body onload="populateTable();">
+    <div class="resTable">
+        <table id="resultsTable">
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function populateTable() {
+            var table = document.getElementById("resultsTable");
+            <!-- For loop to add the rows one by one -->
+            for(name in dataSet) {
+                var row = table.insertRow(-1);
+                var songName = row.insertCell(0);
+                songName.innerHTML = name;
+            }
+        }
+    </script>
+</body>
+</html>

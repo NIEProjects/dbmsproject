@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from json import loads
+import queries
 
 app = Flask('spotify_clone')
 
@@ -15,10 +16,11 @@ def authpage():
 def logininfo():
 	data = loads(request.data)
 	print data
-	if data['username']:
+	valid = queries.checkLogin(data['username'],data['password'])
+	if valid == True:
 		return redirect('/home/'+data['username'])
 	else:
-		return render_template('some.html')
+		return "Login Failed"
 
 @app.route('/home/<name>/')
 def userhome(name):
@@ -31,4 +33,3 @@ def result(marks):
 
 if __name__ == '__main__':
 	app.run(debug = True)
-
