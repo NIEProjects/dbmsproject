@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class=container>
+
+            First Name: <input type=text id="first"/><br/>
+            Last Name: <input type=text id="last" /><br/>
+            Email: <input type=email id="email" required /><br/>
+            Date of Birth: <input type=text id="dob" /><br/>
+            Password: <input type=password id="passwd" /><br/>
+            Confirm Password: <input type=password id="confirm_passwd"/><br/>
+            <p id="result"></p>
+            <button onclick=signup()>Sign Up</button><br/>
+            <script type="text/javascript">
+            function signup() {
+                var first = document.getElementById("first").value,
+                    last = document.getElementById("last").value,
+                    email = document.getElementById("email").value,
+                    dob = document.getElementById("dob").value,
+                    passwd = document.getElementById("passwd").value,
+                    conf_passwd = document.getElementById("confirm_passwd").value,
+                    res = document.getElementById("result"),
+                    xhr = new XMLHttpRequest();
+                console.log(email)
+                if (!document.getElementById("email").validity.valid) {
+                    res.innerHTML = "Email is Invalid";
+                    return;
+                }
+                var params = {
+                    user : email,
+                    first : first,
+                    last : last,
+                    dob : dob,
+                    passwd : passwd
+                }
+                console.log(params)
+                xhr.open('POST','/signupDB',true);
+                xhr.send(JSON.stringify(params));
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 2 || xhr.readyState == 3){
+                        res.innerHTML = 'Request sent, waiting for response';
+                    }
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        // res.innerHTML = this.responseText;
+                        // console.log(JSON.stringify(this.responseText));
+                        console.log("Checking Successfull Request");
+                        console.log(xhr);
+                        setTimeout(function(){
+                            res.innerHTML = xhr.responseText;
+                        },2000);
+                    }
+                }
+            }
+            </script>
+    </div>
+</body>
+</html>
