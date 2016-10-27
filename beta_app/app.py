@@ -27,6 +27,29 @@ def userhome(name):
 	print name
 	return render_template('userhome.html', name = name)
 
+@app.route('/signupDB', methods=['POST'])
+def register():
+	data = loads(request.data)
+	print data
+	if "city" in data.keys():
+		pass
+	else:
+		data["city"]=None
+	if "state" in data.keys():
+		pass
+	else:
+		data["state"]=None
+
+	res = queries.insertProfile(data['user'], data['first'], data['last'], data['dob'], data['city'], data['state'], data['passwd'])
+	if res == True:
+		return "Registration Successful"
+	else:
+		return "Registration Failed"
+
+@app.route('/registration')
+def signup():
+	return render_template('signup.html')
+
 @app.route('/results/<int:marks>')
 def result(marks):
 	return render_template('scorecard.html', marks = marks)

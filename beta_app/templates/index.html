@@ -10,33 +10,93 @@
 			.space{
 				padding: 10px;
 			}
+			.navfont{
+				font-size: 23px;
+			}
+			#overlay {
+			  width: 100%;
+			  height: 100%;			  
+			  display: none;
+			  position: absolute;
+			  z-index: 100;
+			  background:rgba(0,0,0,0.6);
+			  opacity: 0.6;
+
+			}
+
+			#pagecontainer {
+			  position: absolute;
+			  z-index: 101;
+			  display: none;
+			  width: 400px;
+			  height: 500px;
+			  
+			  left: 30%;
+			  top: 5%
+			}
+
+			#page {
+			  display: none
+			}
+
 		</style>
 	</head>
-	<body>
+	<body><div id="overlay" align="center"></div>
 		<nav>
-			<div class="nav-wrapper">
-				<a href="#">Nanna Radio</a>
-				<!-- <ul>
-					<li>Home</li>
-					<li>Radio</li>
-					<li>Discover</li>
-					<li>Browse</li>
-					<li>Login</li>
-				</ul> -->
-				<a href="" class="right space">Home</a>
-				<a href="" class="right space">Radio</a>
-				<a href="" class="right space">Discover</a>
-				<a href="" class="right space">Browse</a>
-				<a href="/auth" class="right space">Login</a>
+		<div class="nav-wrapper blue lighten-2">
+		
+			<div>							
+				<a href="" class="navfont left space">Home</a>
+				<a href="" class="navfont left space">Radio</a>
+				<a href="" class="navfont left space">Discover</a>
+				<a href="" class="navfont left space">Browse</a>
+				<a href="/auth" class="navfont right space">Login</a>
+				
+				<div id="pagecontainer">
+				<img id="close" src="static/img/close.png" style="float: right" />
+				<iframe name="myframe" id="page" width="400" height="500" seamless></iframe>
+				</div>
+				<a id="login" href="/registration" class="navfont right space">New User</a>
+				
 			</div>
+		
+		</div>
 		</nav>
 		<h1>Welcome to Nanna Radio!</h1>
-		<div></div>
-
 
 		<!-- Include jquery before materialize-->
 		<script type="text/javascript" src="static/js/jquery-3.1.1.js"></script>
 		<!-- Include materalize js -->
 		<script type="text/javascript" src="static/js/materialize.js"></script>
+
+		
+		<script type="text/javascript">
+		var ifrm = $('#pagecontainer>#page').get(0)
+		ifrm.onload = function() {
+
+		  $(this).fadeIn("normal")
+		}
+
+		$('a#login').click(function(e) {
+		  e.preventDefault()
+		  var src = $(this).attr('href')
+
+		  $("#overlay").slideDown('normal', function() {
+		    $('#pagecontainer').slideDown('normal')
+
+		    $('#pagecontainer>#page').attr('src', src)
+		  });
+
+		})
+
+		$('#overlay').click(function() {
+		  $('#overlay,#pagecontainer,#page').hide();
+		})
+
+		$('#pagecontainer>#close').click(function(e) {
+		  $('#overlay').click()
+		})
+
+		</script>
 	</body>
 </html>

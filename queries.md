@@ -19,7 +19,7 @@ CREATE TABLE UserProfile(
 CREATE TABLE Credentials(
 	user_id int(20),
     username TEXT,
-    md5_passwd TEXT NOT NULL UNIQUE,
+    md5_passwd TEXT NOT NULL,
     FOREIGN KEY(username) REFERENCES UserProfile(username),
 	FOREIGN KEY(user_id) REFERENCES UserProfile(user_id)
     );
