@@ -11,6 +11,13 @@ def connectDB():
 def closeDB(conn):    
     conn.close()
 
+def getUsers():
+    (conn,cur) = connectDB()
+    cur.execute("select user_id,username from UserProfile")
+    data = cur.fetchall()
+    closeDB(conn)
+    return dict((y,x) for x,y in data)
+
 def insertProfile(username, first, last, dob, city, state, passwd):
     (conn,cur) = connectDB()
     user_id = int(time())
