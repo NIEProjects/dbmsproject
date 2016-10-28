@@ -1,31 +1,80 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash, session
 from json import loads
 import queries
+#from mydecorators import login_required
 
-app = Flask('spotify_clone')
+def login_user(user_tup):
+	print "login_user"
+	(user_id,username) = user_tup
+	tok = queries.createToken(user_id)
+	if tok:
+		session['token'] = tok
+		session['user_id'] = user_id
+		session['username'] = username
+
+		print "Login Successful"
+		return True
+
+	print "Login Failed"
+	return False
+
+def is_loggedin(user_id):
+	user_dict = queries.getLoggedinUsers()
+	print user_dict
+	if session['user_id'] in user_dict.keys():
+		if session['token'] == user_dict[user_id]:
+			return True
+	return False
+
+
+app = Flask('nanna_radio')
+app.secret_key = 'c60d4c1e51543f9ec97a6900c03221a63f4f84585791f52693c656135d7fb0ed'
+app.config.from_object(__name__)
+
 
 @app.route('/')
 def homepage():
+	print session
 	return render_template('index.html')
 
 @app.route('/auth/')
 def authpage():
 	return render_template('auth.html')
 
-@app.route('/login', methods=['POST'])
-def logininfo():
-	data = loads(request.data)
-	print data
-	valid = queries.checkLogin(data['username'],data['password'])
-	if valid == True:
-		return redirect('/home/'+data['username'])
-	else:
-		return "Login Failed"
+@app.route('/login', methods=['GET','POST'])
+def login():
+	print "login"
+	if request.method == 'POST':
+		data={'username':request.form['username'],'password':request.form['password']}
+		print data
+		valid = queries.checkLogin(data['username'],data['password'])
+		
+		r = login_user(valid)
 
-@app.route('/home/<name>/')
-def userhome(name):
-	print name
-	return render_template('userhome.html', name = name)
+		return redirect(url_for('homepage'))
+	else:
+		return render_template('index.html')
+
+@app.route('/logout')
+def logout():	
+	if not is_loggedin(session['user_id']):
+		return redirect(url_for("homepage"))
+		
+	res = queries.logoutUser(session['user_id'],session['token'])
+	session['user_id'] = 0
+	session['token'] = ''
+	session['username'] = ''
+
+	print "Logout Successful"
+	flash("Logged Out")
+	return redirect(url_for("homepage"))
+
+@app.route('/userhome')
+def userhome():	
+	if not is_loggedin(session['user_id']):
+		return
+	print session
+	return render_template('userhome.html')
 
 @app.route('/signupDB', methods=['POST'])
 def register():

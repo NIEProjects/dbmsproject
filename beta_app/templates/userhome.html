@@ -4,6 +4,8 @@
 	<title></title>
 </head>
 <body>
-<div>hello {{name}} !</div>
+{% if current_user.is_authenticated %}
+  Hari: Om {{ current_user.name }}!
+{% endif %}
 </body>
 </html>

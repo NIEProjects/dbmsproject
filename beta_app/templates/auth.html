@@ -22,50 +22,17 @@
 	<body>
 		<h1>Please login to continue</h1>
 		<div class="container">
-			<!-- <form name="loginForm"> -->
-			<!-- Correct Username: chait ;Password: pass-->
+			<form name="loginForm" action="/login" method="POST">			
 				<div>
-					Email : <input type="email" id = "username" name="user" required>
+					Email : <input type="email" name="username" id="username" value="{{request.form.username}}" required>
 				</div>
 				<div>
-					Password : <input type="password" id="password" required>
+					Password : <input type="password" name="password" id="password" value="{{request.form.password}}" required>
 				</div>
-				<div>
-					<button onclick="login()">Log In</button>
-				</div>
-			<!-- </form> -->
-			<div id="response" class="responseText"></div>
+				<input type="Submit" value="Login">
+			</form>
+			
 		</div>
-			<script type="text/javascript">
-				function login () {
-					var username = document.getElementById('username').value,
-						password = document.getElementById('password').value,
-						res = document.getElementById('response'),
-						xhr = new XMLHttpRequest();
-
-					var params = {
-						username : username,
-						password : password
-					};
-					//Opening and sending a XHR request
-					xhr.open('POST','/login',true);
-					xhr.send(JSON.stringify(params));
-
-					xhr.onreadystatechange = function(){
-						if(xhr.readyState == 2 || xhr.readyState == 3){
-							res.innerHTML = 'Request sent, waiting for response';
-						}
-						if(xhr.readyState == 4 && xhr.status == 200){
-							// res.innerHTML = this.responseText;
-							// console.log(JSON.stringify(this.responseText));
-							console.log("Checking Successfull Request");
-							console.log(xhr);
-							setTimeout(function(){
-								res.innerHTML = xhr.responseText;
-							},2000);
-						}
-					}
-				}
-		</script>
+			
 	</body>
 </html>

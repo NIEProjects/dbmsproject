@@ -50,20 +50,24 @@
 				<a href="" class="navfont left space">Radio</a>
 				<a href="" class="navfont left space">Discover</a>
 				<a href="" class="navfont left space">Browse</a>
-				<a href="/auth" class="navfont right space">Login</a>
+				<a href="{{ url_for('authpage') }}" class="navfont right space">Login</a>
 				
 				<div id="pagecontainer">
 				<img id="close" src="static/img/close.png" style="float: right" />
 				<iframe name="myframe" id="page" width="400" height="500" seamless></iframe>
 				</div>
-				<a id="login" href="/registration" class="navfont right space">New User</a>
+				<a id="login" href="{{ url_for('signup') }}" class="navfont right space">New User</a>
 				
 			</div>
 		
 		</div>
 		</nav>
 		<h1>Welcome to Nanna Radio!</h1>
-
+		<h3>
+		{% if session['user_id'] %}
+  		Hari: Om {{ session['username'] }}!
+		{% endif %}
+		</h3>	
 		<!-- Include jquery before materialize-->
 		<script type="text/javascript" src="static/js/jquery-3.1.1.js"></script>
 		<!-- Include materalize js -->
