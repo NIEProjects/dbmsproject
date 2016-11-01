@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
-from json import loads
 import queries
-#from mydecorators import login_required
 
 def login_user(user_tup):
 	print "login_user"
@@ -30,7 +28,6 @@ def is_loggedin(user_id):
 app = Flask('nanna_radio')
 app.secret_key = 'c60d4c1e51543f9ec97a6900c03221a63f4f84585791f52693c656135d7fb0ed'
 app.config.from_object(__name__)
-
 
 @app.route('/')
 def homepage():
@@ -66,6 +63,7 @@ def logout():
 	session['username'] = ''
 
 	print "Logout Successful"
+
 	flash("Logged Out")
 	return redirect(url_for("homepage"))
 

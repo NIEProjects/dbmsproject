@@ -22,14 +22,17 @@
 	<body>
 		<h1>Please login to continue</h1>
 		<div class="container">
-			<form name="loginForm" action="/login" method="POST">			
+
+			<form name="loginForm" action="/login" method="POST">
+			
 				<div>
-					Email : <input type="email" name="username" id="username" value="{{request.form.username}}" required>
+					Email : <input type="email" name="username" id="username" required>
 				</div>
 				<div>
-					Password : <input type="password" name="password" id="password" value="{{request.form.password}}" required>
+					Password : <input type="password" name="password" id="password" required>
 				</div>
 				<input type="Submit" value="Login">
+
 			</form>
 			
 		</div>

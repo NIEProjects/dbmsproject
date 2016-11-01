@@ -18,7 +18,6 @@ def getUsers():
     closeDB(conn)
     return dict((y,x) for x,y in data)
 
-
 def insertProfile(username, first, last, dob, city, state, passwd):
     (conn,cur) = connectDB()
     user_id = int(time())
