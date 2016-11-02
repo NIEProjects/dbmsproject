@@ -3,9 +3,9 @@
 	<head>
 		<title>Nanna Radio</title>
 		<!-- Include main css -->
-		<link rel="stylesheet" type="text/css" href="static/css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<!-- Include materalize css -->
-		<link rel="stylesheet" type="text/css" href="static/css/materialize.css">
+		<link rel="stylesheet" type="text/css" href="css/materialize.css">
 		<style type="text/css">
 			.space{
 				padding: 10px;
@@ -47,13 +47,13 @@
 		
 			<div>							
 				<a href="" class="navfont left space">Home</a>
-				<a href="" class="navfont left space">Radio</a>
+				<a href="{{ url_for('radioplayer') }}" class="navfont left space">Radio</a>
 				<a href="" class="navfont left space">Discover</a>
 				<a href="" class="navfont left space">Browse</a>
 				<a href="{{ url_for('authpage') }}" class="navfont right space">Login</a>
 				
 				<div id="pagecontainer">
-				<img id="close" src="static/img/close.png" style="float: right" />
+				<img id="close" src="img/close.png" style="float: right" />
 				<iframe name="myframe" id="page" width="400" height="500" seamless></iframe>
 				</div>
 				<a id="login" href="{{ url_for('signup') }}" class="navfont right space">New User</a>
@@ -69,9 +69,9 @@
 		{% endif %}
 		</h3>	
 		<!-- Include jquery before materialize-->
-		<script type="text/javascript" src="static/js/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
 		<!-- Include materalize js -->
-		<script type="text/javascript" src="static/js/materialize.js"></script>
+		<script type="text/javascript" src="js/materialize.js"></script>
 
 		
 		<script type="text/javascript">

@@ -25,7 +25,7 @@ def is_loggedin(user_id):
 	return False
 
 
-app = Flask('nanna_radio')
+app = Flask('nanna_radio',static_url_path = '')
 app.secret_key = 'c60d4c1e51543f9ec97a6900c03221a63f4f84585791f52693c656135d7fb0ed'
 app.config.from_object(__name__)
 
@@ -101,5 +101,17 @@ def signup():
 def result(marks):
 	return render_template('scorecard.html', marks = marks)
 
+@app.route('/radio')
+def radioplayer():
+	return render_template('radio.html')
+@app.route('/radio/getsongs', methods=['POST'])
+def songlist():
+	data = {"title1":"Test Song 1","title2" : "Happy Birthday","title3":"We shall Overcome", "link1": "/media/preview.mp3", "link2": "/media/happybday.mp3","link3" : "/media/weshallovercome.mp3"}
+	return render_template('audio.html', data=data)
+
+# @app.route('/media/<songname>')
+# def play():
+# 	pass
+
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug = True, threaded = True)
