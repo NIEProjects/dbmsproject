@@ -42,6 +42,7 @@ def authpage():
 def login():
 	print "login"
 	if request.method == 'POST':
+		print request.form		
 		data={'username':request.form['username'],'password':request.form['password']}
 		print data
 		valid = queries.checkLogin(data['username'],data['password'])
@@ -64,7 +65,7 @@ def logout():
 
 	print "Logout Successful"
 
-	flash("Logged Out")
+	# flash("Logged Out")
 	return redirect(url_for("homepage"))
 
 @app.route('/userhome')
@@ -102,4 +103,4 @@ def result(marks):
 	return render_template('scorecard.html', marks = marks)
 
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug = True,threaded=True)
