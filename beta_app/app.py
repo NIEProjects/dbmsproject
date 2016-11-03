@@ -1,8 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
+from json import loads
 import queries
 
 def login_user(user_tup):
 	print "login_user"
+	if user_tup == None:
+		return False
+		
 	(user_id,username) = user_tup
 	tok = queries.createToken(user_id)
 	if tok:

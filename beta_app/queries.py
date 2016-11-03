@@ -26,8 +26,8 @@ def insertProfile(username, first, last, dob, city, state, passwd):
     hash_pass = md5.hexdigest()
 
     try:
-        cur.execute("insert into UserProfile values (?,?,?,?,?,?,?)"
-                    ,(user_id,username,first,last,dob,city,state))
+        cur.execute("insert into UserProfile values (?,?,?,?,?,?,?,?)"
+                    ,(user_id,username,first,last,dob,city,state,None))
         cur.execute("insert into Credentials values \
                     (?,?,?)",(user_id,username,hash_pass))
     except Exception as e:
@@ -71,7 +71,7 @@ def createToken(user_id):
         cur.execute("INSERT INTO LoggedInUsers values(?,?)",(user_id,token))
         conn.commit()
     except Exception as e:
-        print e
+        print "Error in createToken",e
         closeDB(conn)
         return False
 
