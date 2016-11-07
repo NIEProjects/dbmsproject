@@ -1,118 +1,127 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Nanna Radio</title>
-		<!-- Include main css -->
-		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<!-- Include materalize css -->
-		<link rel="stylesheet" type="text/css" href="css/materialize.css">
-		<style type="text/css">
-			.space{
-				padding: 10px;
-			}
-			.navfont{
-				font-size: 23px;
-			}
-			#overlay {
-			  width: 100%;
-			  height: 100%;			  
-			  display: none;
-			  position: absolute;
-			  z-index: 100;
-			  background:rgba(0,0,0,0.6);
-			  opacity: 0.6;
 
-			}
+<head>
 
-			#pagecontainer {
-			  position: absolute;
-			  z-index: 101;
-			  display: none;
-			  width: 400px;
-			  height: 500px;
-			  
-			  left: 33%;
-			  top: 5%
-			}
+    <title>Nanna Radio</title>
+    <!-- Include main css -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Include materalize css -->
+    <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel="shortcut icon" href="images/favicon.ico">
 
-			#page {
-			  display: none
-			}
+</head>
 
-		</style>
-	</head>
-	<body><div id="overlay" align="center"></div>
-		<nav>
-		<div class="nav-wrapper blue lighten-2">
-		
-			<div>							
-				<a href="" class="navfont left space">Home</a>
-				<a href="{{ url_for('radioplayer') }}" class="navfont left space">Radio</a>
-				<a href="" class="navfont left space">Discover</a>
-				<a href="" class="navfont left space">Browse</a>
-				{% if session['user_id'] %}
-				<a id="login" href="{{ url_for('logout') }}" class="navfont right space">Logout</a>
-				{% endif %}
+<body onload="ready()">
+    <div id="overlay" align="center"></div>
+    <!-- The below navigation bar should be written in another file
+    and imported here using extends -->
+    <div class="navbar-fixed">
+        <nav class="blue lighten-2">
+            <div class="nav-wrapper">
 
-				
-				{% if not session['user_id'] %}
+                <ul class="left hide-on-med-and-down">
+                    <li><a href="" class="navfont">Home</a>
+                    </li>
+                    <li><a href="{{ url_for('radioplayer') }}" class="navfont">Radio</a>
+                    </li>
+                    <li><a href="" class="navfont">Discover</a>
+                    </li>
+                    <li><a href="" class="navfont">Browse</a>
+                    </li>
+                </ul>
+                {% if session['user_id'] %}
+                <ul class="right hide-on-med-and-down">
+                    <li><a id="login" href="{{ url_for('logout') }}" class="navfont">Logout</a>
+                    </li>
+                </ul>
+                {% endif %} 
 
-				<div id="pagecontainer">
-				<img id="close" src="images/close.png" style="float: right" />
-				<iframe name="myframe" id="page" width="400" height="500" seamless></iframe>
-				</div>
-				
-				<a id="login" href="{{ url_for('authpage') }}" class="navfont right space">Login</a>
-								
-				<a id="login" href="{{ url_for('signup') }}" class="navfont right space">New User</a>
-				{% endif %}
-			</div>
-		
-		</div>
-		</nav>
-		<h1>Welcome to Nanna Radio!</h1>
-		<h3>
+                {% if not session['user_id'] %}
+
+                <div id="pagecontainer">
+                    <img id="close" src="images/close.png" style="float: right" />
+                    <iframe name="myframe" id="page" width="400" height="500" seamless></iframe>
+                </div>
+                <ul class="right hide-on-med-and-down">
+                    <li><a id="login" href="{{ url_for('authpage') }}" class="navfont">Login</a>
+                    </li>
+
+                    <li><a id="login" href="{{ url_for('signup') }}" class="navfont">New User</a>
+                    </li>
+                </ul>
+                {% endif %}
+
+            </div>
+        </nav>
+    </div>
+    <!-- end navigation bar -->
+
+    {% if not session['user_id'] %}
+    <div id="bkgd" class="background1">
+        <div class="welcome">
+            &nbsp;
+            <h1 id="welcome-text">Welcome to Nanna Radio!</h1>
+            <h1 id="welcome-text">ನನ್ನ ರೇಡಿಯೋಗೆ ಸ್ವಾಗತ</h1>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+        <!-- <img id="earphones" src="images/earphones.jpg">
+		<img id="bignotes" src="images/big_notes.jpg">
+		<img id="musicnotes" src="images/music_notes.gif">
+		<img id="banner" src="images/banner.jpg">
+		 -->
+        <h3>
 		{% if session['user_id'] %}
   		Hari: Om {{ session['username'] }}!
 		{% endif %}
-		</h3>	
-		<!-- Include jquery before materialize-->
-		<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
-		<!-- Include materalize js -->
-		<script type="text/javascript" src="js/materialize.js"></script>
+		</h3>
+    </div>
 
-		
-		<script type="text/javascript">
-		var ifrm = $('#pagecontainer>#page').get(0)
-		ifrm.onload = function() {
+    <!-- Include jquery before materialize-->
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <!-- Include materalize js -->
+    <script type="text/javascript" src="js/materialize.js"></script>
 
-		  $(this).fadeIn("normal")
-		}
 
-		$('a#login').click(function(e) {
-		  e.preventDefault()
-		  var src = $(this).attr('href')
+    <script type="text/javascript">
+        var ifrm = $('#pagecontainer>#page').get(0)
+        ifrm.onload = function() {
 
-		  $("#overlay").slideDown('normal', function() {
-		    $('#pagecontainer').slideDown('normal')
+            $(this).fadeIn("normal")
+        }
 
-		    $('#pagecontainer>#page').attr('src', src)
-		  });
+        $('a#login').click(function(e) {
+            e.preventDefault()
+            var src = $(this).attr('href')
 
-		})
+            $("#overlay").slideDown('normal', function() {
+                $('#pagecontainer').slideDown('normal')
 
-		$('#overlay').click(function() {
-		  $('#overlay,#pagecontainer,#page').hide();
-		})
+                $('#pagecontainer>#page').attr('src', src)
+            });
 
-		$('#pagecontainer>#close').click(function(e) {
-		  $('#overlay').click()
-		})
+        })
 
-		function closeIFrame(){
-			$('#overlay,#pagecontainer,#page').hide();
-			setTimeout("location.reload(true);",1000);
-		}
-		</script>
-	</body>
+        $('#overlay').click(function() {
+            $('#overlay,#pagecontainer,#page').hide();
+        })
+
+        $('#pagecontainer>#close').click(function(e) {
+            $('#overlay').click()
+        })
+
+        function closeIFrame() {
+            $('#overlay,#pagecontainer,#page').hide();
+            setTimeout("location.reload(true);", 1000);
+        }
+
+        function ready() {
+            $("#bkgd").hide();
+            $("#bkgd").fadeIn(2000);
+        }
+    </script>
+</body>
+
 </html>
