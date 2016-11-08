@@ -7,21 +7,36 @@
     <!-- Include main css -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Include materalize css -->
-    <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
     <link rel="shortcut icon" href="images/favicon.ico">
+        <!-- Include jquery before materialize-->
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <!-- Include materalize js -->
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <link href="css/material-icons.css" rel="stylesheet">
 
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".button-collapse").sideNav();
+        $('.modal-trigger').leanModal();
+        $('#push,secton').pushpin({ top:$('#push').height() });
+    })
+    </script>
 </head>
 
-<body onload="ready()">
+<body onload="pageready()">
     <div id="overlay" align="center"></div>
     <!-- The below navigation bar should be written in another file
     and imported here using extends -->
+    <div id="nav">
     <div class="navbar-fixed">
         <nav class="blue lighten-2">
             <div class="nav-wrapper">
+                <a href="#!" class="brand-logo center">&nbsp;&nbsp;Nanna Radio</a>
+                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> 
 
                 <ul class="left hide-on-med-and-down">
-                    <li><a href="" class="navfont">Home</a>
+                    <li><a href="/" class="navfont">Home</a>
                     </li>
                     <li><a href="{{ url_for('radioplayer') }}" class="navfont">Radio</a>
                     </li>
@@ -52,8 +67,30 @@
                 </ul>
                 {% endif %}
 
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="/" class="navfont">Home</a>
+                    </li>
+                    <li><a href="{{ url_for('radioplayer') }}" class="navfont">Radio</a>
+                    </li>
+                    <li><a href="" class="navfont">Discover</a>
+                    </li>
+                    <li><a href="" class="navfont">Browse</a>
+                    </li>
+                    {% if session['user_id'] %}
+                    <li><a href="{{ url_for('logout') }}" class="navfont">Logout</a>
+                    </li>
+                    {% endif %}
+                    {% if not session['user_id'] %}
+                    <li><a href="{{ url_for('authpage') }}" class="navfont">Login</a>
+                    </li>
+
+                    <li><a href="{{ url_for('signup') }}" class="navfont">New User</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </nav>
+    </div>
     </div>
     <!-- end navigation bar -->
 
@@ -78,12 +115,6 @@
 		{% endif %}
 		</h3>
     </div>
-
-    <!-- Include jquery before materialize-->
-    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
-    <!-- Include materalize js -->
-    <script type="text/javascript" src="js/materialize.js"></script>
-
 
     <script type="text/javascript">
         var ifrm = $('#pagecontainer>#page').get(0)
@@ -117,7 +148,7 @@
             setTimeout("location.reload(true);", 1000);
         }
 
-        function ready() {
+        function pageready() {
             $("#bkgd").hide();
             $("#bkgd").fadeIn(2000);
         }
