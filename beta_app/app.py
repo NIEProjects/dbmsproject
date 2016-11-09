@@ -7,12 +7,13 @@ def login_user(user_tup):
 	if user_tup == None:
 		return False
 		
-	(user_id,username) = user_tup
+	(user_id,username,first) = user_tup
 	tok = queries.createToken(user_id)
 	if tok:
 		session['token'] = tok
 		session['user_id'] = user_id
 		session['username'] = username
+		session['first'] = first
 
 		print "Login Successful"
 		return True
@@ -78,6 +79,30 @@ def userhome():
 		return
 	print session
 	return render_template('userhome.html')
+
+@app.route('/profile')
+def profile():
+	if not is_loggedin(session['user_id']):
+		return
+	data = queries.getProfile(session['user_id'])
+	print data
+	return render_template('profile.html',profile_data=data)
+
+@app.route('/updateProfile', methods=['POST'])
+def updateProfile():
+	if not is_loggedin(session['user_id']):
+		return render_template(url_for('homepage'))
+	data = loads(request.data)
+	print "updateProfile"
+	try:
+
+		queries.updateProfile(session['user_id'],data['first'],data['last'])
+		res = '<p id="result">Update Successful</p>'
+	except Exception as e:
+		print "Error in updateProfile route : ",e
+		res = '<p id="result">Update Profile Failed</p>'
+	finally:
+		return res
 
 @app.route('/signupDB', methods=['POST'])
 def register():

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+{% for key in profile_data %}
+
+{% if profile_data[key] %}
+	<div class="row s12">
+		<div class="col s6">
+			<p class="navfont">{{ key }}</p>
+		</div>
+		<div class="col s6">
+
+		{% if key=='First Name' or key=='Last Name'%}
+		<input id="{{ key }}" class="sign-up-input navfont" type="text" value="{{ profile_data[key] }}" >
+		{% else %}
+		<p id="{{ key }}" class="navfont">{{ profile_data[key] }}</p>
+		{% endif %}
+
+		</div>	
+	</div>
+{% endif %}
+{% endfor %}
+	<p id="result"></p>
+	<button class="right navfont btn waves-effect green white-text" onclick=updateData() >Update</button>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+function updateData() {
+	var first = document.getElementById("First Name").value,
+            last = document.getElementById("Last Name").value,
+            res = document.getElementById("result"),
+            xhr = new XMLHttpRequest();
+
+        var params = {
+            first : first,
+            last : last, 
+        }
+        console.log(params)
+        xhr.open('POST','/updateProfile',true);
+        xhr.send(JSON.stringify(params));
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 2 || xhr.readyState == 3){
+                res.innerHTML = 'Request sent, waiting for response';
+            }
+            if(xhr.readyState == 4 && xhr.status == 200){
+                // res.innerHTML = this.responseText;
+                // console.log(JSON.stringify(this.responseText));
+                console.log("Checking Successfull Request");
+                console.log(xhr);
+                setTimeout(function(){
+                    res.innerHTML = xhr.responseText;
+                },2000);
+            }
+        }
+    }
+</script>
+{% endblock %}
