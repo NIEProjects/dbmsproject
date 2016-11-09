@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from json import loads
+from random import shuffle
 import queries
 
 def login_user(user_tup):
@@ -137,8 +138,8 @@ def radioplayer():
 
 @app.route('/radio/getsongs', methods=['POST'])
 def songlist():
-	data = {"title1":"Test Song 1","title2" : "Happy Birthday","title3":"We shall Overcome", "link1": "/media/preview.mp3", "link2": "/media/happybday.mp3","link3" : "/media/weshallovercome.mp3"}
-	return render_template('audio.html', data=data)
+	songs_data = queries.getsongs()
+	return render_template('audio.html', songs=songs_data)
 
 @app.route('/discover')
 def discoverview():
@@ -146,11 +147,10 @@ def discoverview():
 
 @app.route('/discover/getsongs', methods=['POST'])
 def discovertemplate():
-	data = {"title1":"Test Song 1","title2" : "Happy Birthday","title3":"We shall Overcome", "link1": "/media/preview.mp3", "link2": "/media/happybday.mp3","link3" : "/media/weshallovercome.mp3","img2":"/images/happybday.jpg","img3":"/images/weshallovercome.jpg"}
-	return render_template('discover_template.html', data=data)
-# @app.route('/media/<songname>')
-# def play():
-# 	pass
+	songs_data = queries.getsongs()
+	shuffle(songs_data)
+	return render_template('discover_template.html', songs=songs_data)
+
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',threaded=True,debug=True)
