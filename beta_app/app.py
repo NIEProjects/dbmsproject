@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from json import loads
+from random import shuffle
 import queries
 
 def login_user(user_tup):
@@ -122,6 +123,7 @@ def discoverview():
 @app.route('/discover/getsongs', methods=['POST'])
 def discovertemplate():
 	songs_data = queries.getsongs()
+	shuffle(songs_data)
 	return render_template('discover_template.html', songs=songs_data)
 
 

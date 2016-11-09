@@ -98,6 +98,5 @@ def getsongs():
     (conn,cur) = connectDB()
     cur.execute("select name,url,img_url from songs")
     songslist = cur.fetchall()
-    print songslist
     closeDB(conn)
     return songslist
