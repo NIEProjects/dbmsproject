@@ -44,6 +44,22 @@ CREATE TABLE Songs(
     url TEXT NOT NULL UNIQUE,
     copies_sold int(10)
     );
+
+CREATE TABLE Songs(
+    song_id int(20) PRIMARY KEY,
+    name TEXT NOT NULL,
+    singer TEXT NOT NULL,
+    film TEXT,
+    genre TEXT NOT NULL,
+    language TEXT,
+    duration float NOT NULL,
+    price float,
+    rating int(3),
+    url TEXT NOT NULL UNIQUE,
+    copies_sold int(10), 
+    img_url TEXT default '/images/defaultsong.jpg'
+    );
+
     
 CREATE TABLE FavouriteGenres(
     user_id int(20),
