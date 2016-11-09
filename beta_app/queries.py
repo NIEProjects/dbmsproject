@@ -92,3 +92,12 @@ def logoutUser(user_id,token):
     conn.commit()
     closeDB(conn)
     return True
+
+# Queries related to songs
+def getsongs():
+    (conn,cur) = connectDB()
+    cur.execute("select name,url,img_url from songs")
+    songslist = cur.fetchall()
+    print songslist
+    closeDB(conn)
+    return songslist
