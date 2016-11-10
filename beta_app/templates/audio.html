@@ -1,9 +1,0 @@
-{% for song in songs %}
-<div>
-	<h3>Song Title: {{ song[0] }}</h3>
-	<audio controls="true" >
-		<source src="{{ song[1] }}" type="audio/mp3">
-	</audio>
-</div>
-{% endfor %}
-

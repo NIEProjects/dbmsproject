@@ -21,7 +21,7 @@ def getUsers():
 def getProfile(user_id):
     (conn,cur) = connectDB()
     cur.execute("select username,first_name,last_name,strftime('%d-%m-%Y',date_of_birth),city, \
-                 state,strftime('%d-%m-%Y %H:%M:%S',last_logged_in) from UserProfile where user_id=?",(user_id,))
+                 state from UserProfile where user_id=?",(user_id,))
     res = cur.fetchall()[0]
     data = OrderedDict()
     #All the values are declared sequentially to store the order of values
@@ -31,7 +31,7 @@ def getProfile(user_id):
     data['Date of Birth'] = res[3]
     data['City'] = res[4]
     data['State'] = res[5]
-    data['Last Logged in Time'] = res[6]
+    
     closeDB(conn)
     return data
 
@@ -65,6 +65,7 @@ def updateProfile(user_id,first,last):
     except Exception as e:
         print "Error in updateProfile query : ",e
         conn.rollback()
+        raise e
     finally:
         closeDB(conn)
 
@@ -126,9 +127,9 @@ def logoutUser(user_id,token):
     return True
 
 # Queries related to songs
-def getsongs():
+def getSongs():
     (conn,cur) = connectDB()
-    cur.execute("select name,url,img_url from songs")
+    cur.execute("select name,url,img_url from Songs")
     songslist = cur.fetchall()
     closeDB(conn)
     return songslist

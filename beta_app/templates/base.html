@@ -48,16 +48,16 @@
                     </li>
                 </ul>
                 {% if session['user_id'] %}
-                
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('profile') }}" class="navfont">Profile</a>
-                    </li>
-                </ul>
 
                 <ul class="right hide-on-med-and-down">
                     <li><a id="login" href="{{ url_for('logout') }}" class="navfont">Logout</a>
                     </li>
                 </ul>
+                
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('profile') }}" class="navfont">Profile</a>
+                    </li>
+                </ul>                
 
                 {% endif %} 
 

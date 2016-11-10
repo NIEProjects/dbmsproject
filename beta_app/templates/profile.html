@@ -1,10 +1,47 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block head %}
+<style type="text/css">
+    #resultSuccess {
+        color: #006400; /* DarkGreen */
+        box-shadow: inset 0 -2px #62c2e4;
+    }
+
+    #resultFailure {
+        color: red;
+        box-shadow: inset 0 -2px #62c2e4;
+    }
+
+    .sign-up-input {
+      width: 100%                           !important;
+      height: 50px                          !important;
+      margin-bottom: 25px                   !important;
+      padding: 0 15px 2px                   !important;
+      font-size: 20px                       !important;
+      background: white                     !important;
+      border: 2px solid #ebebeb             !important;
+      border-radius: 4px                    !important;
+      -webkit-box-shadow: inset 0 -2px #ebebeb !important;
+      box-shadow: inset 0 -2px #ebebeb      !important;
+    }
+    .sign-up-input:focus {
+      border-color: #62c2e4                 !important;
+      outline: none                         !important;
+      -webkit-box-shadow: inset 0 -2px #62c2e4 !important;
+      box-shadow: inset 0 -2px #62c2e4      !important;
+    }
+
+    .user-icon {
+        padding-left: 25%;
+    }
+
+</style>
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container" style="padding-left: 10%;">
+<br />
+<img src="images/user-icon.png" height="100px" class="user-icon">
 {% for key in profile_data %}
 
 {% if profile_data[key] %}
@@ -15,7 +52,9 @@
 		<div class="col s6">
 
 		{% if key=='First Name' or key=='Last Name'%}
+        
 		<input id="{{ key }}" class="sign-up-input navfont" type="text" value="{{ profile_data[key] }}" >
+        
 		{% else %}
 		<p id="{{ key }}" class="navfont">{{ profile_data[key] }}</p>
 		{% endif %}
@@ -24,8 +63,12 @@
 	</div>
 {% endif %}
 {% endfor %}
-	<p id="result"></p>
-	<button class="right navfont btn waves-effect green white-text" onclick=updateData() >Update</button>
+	<p id="result" class="navfont center"></p>
+  <div class="center" style="padding-right: 15%">
+  <a href="/" class="navfont btn waves-effect green white-text" >Back</a>
+
+	<button style="margin-left: 5em" class="navfont btn waves-effect green white-text" onclick=updateData() >Update</button>
+  </div>
 </div>
 
 {% endblock %}

@@ -40,6 +40,13 @@ def homepage():
 	print session
 	return render_template('index.html')
 
+# The below catch all function requires static_url_path = '' to be removed
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# def catch_all(path):
+# 	print "Catch all path requested = ",path
+# 	return render_template('index.html')
+
 @app.route('/auth/')
 def authpage():
 	return render_template('auth.html')
@@ -57,7 +64,7 @@ def login():
 
 		return redirect(url_for('homepage'))
 	else:
-		return render_template('index.html')
+		return redirect(url_for('homepage'))
 
 @app.route('/logout')
 def logout():	
@@ -77,14 +84,14 @@ def logout():
 @app.route('/userhome')
 def userhome():	
 	if not is_loggedin(session['user_id']):
-		return
+		return redirect(url_for('homepage'))
 	print session
 	return render_template('userhome.html')
 
 @app.route('/profile')
 def profile():
 	if not is_loggedin(session['user_id']):
-		return
+		return redirect(url_for('homepage'))
 	data = queries.getProfile(session['user_id'])
 	print data
 	return render_template('profile.html',profile_data=data)
@@ -96,12 +103,11 @@ def updateProfile():
 	data = loads(request.data)
 	print "updateProfile"
 	try:
-
 		queries.updateProfile(session['user_id'],data['first'],data['last'])
-		res = '<p id="result">Update Successful</p>'
+		res = '<p id="resultSuccess">Update Successful</p>'
 	except Exception as e:
 		print "Error in updateProfile route : ",e
-		res = '<p id="result">Update Profile Failed</p>'
+		res = '<p id="resultFailure">Update Profile Failed</p>'
 	finally:
 		return res
 
@@ -134,22 +140,14 @@ def result(marks):
 
 @app.route('/radio')
 def radioplayer():
-	return render_template('radio.html')
-
-@app.route('/radio/getsongs', methods=['POST'])
-def songlist():
-	songs_data = queries.getsongs()
-	return render_template('audio.html', songs=songs_data)
+	songs_data = queries.getSongs()
+	return render_template('radio.html', songs=songs_data)
 
 @app.route('/discover')
 def discoverview():
-	return render_template('discover_main.html')
-
-@app.route('/discover/getsongs', methods=['POST'])
-def discovertemplate():
-	songs_data = queries.getsongs()
+	songs_data = queries.getSongs()
 	shuffle(songs_data)
-	return render_template('discover_template.html', songs=songs_data)
+	return render_template('discover.html', songs=songs_data)
 
 
 if __name__ == '__main__':

@@ -12,25 +12,16 @@
 {% endblock %}
 {% block body %}
 		<div class="container" id="container">
+		{% for song in songs %}
+		<div>
+			<h3>Song Title: {{ song[0] }}</h3>
+			<audio controls="true" >
+				<source src="{{ song[1] }}" type="audio/mp3">
+			</audio>
 		</div>
+		{% endfor %}
+		</div>
+
 {% endblock %}
 {% block script %}
-	<script type="text/javascript">
-		var data_global;
-		function fetch_all(){
-			var btn = document.getElementById('btn_play'),
-				container = document.getElementById('container'),
-				xhr = new XMLHttpRequest();
-				//Opening and sending a XHR request
-				xhr.open('POST','/radio/getsongs',true);
-				xhr.send(null);
-				xhr.onreadystatechange = function(){
-					if(xhr.readyState == 4 && xhr.status == 200){
-						container.innerHTML = xhr.response;
-					}
-				};
-
-		};
-		window.onload = fetch_all;
-		</script>
 {% endblock %}

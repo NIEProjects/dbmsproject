@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Discover{% endblock %}
+{% block head %}
+	<style type="text/css">
+	
+		.container{
+			text-align: center;
+			/*border: 1px solid black;*/
+			padding: 10px;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+		<div class="container" id="container">
+			{% for song in songs %}
+			<div class="col s12 m7">
+			  <div class="card horizontal">
+			    <div class="card-image">
+			      <img src="{{ song[2] }}">
+			    </div>
+			    <div class="card-stacked">
+			      <div class="card-content">
+			        <p><h1>{{ song[0] }}</h1></p>
+			      </div>
+			      <div class="card-action">
+			        <a href="{{ song[1] }}">Play</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			{% endfor %}
+		</div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}
