@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
-from json import loads
+from json import loads,dumps
 from random import shuffle
 import queries
 
@@ -92,15 +92,16 @@ def userhome():
 def profile():
 	if not is_loggedin(session['user_id']):
 		return redirect(url_for('homepage'))
-	data = queries.getProfile(session['user_id'])
-	print data
-	return render_template('profile.html',profile_data=data)
+	(data,fav) = queries.getProfile(session['user_id'])
+	print data,fav	
+	return render_template('profile.html',profile_data=data,favourites=fav,json_fav=dumps(fav))
 
 @app.route('/updateProfile', methods=['POST'])
 def updateProfile():
 	if not is_loggedin(session['user_id']):
 		return render_template(url_for('homepage'))
 	data = loads(request.data)
+	print data
 	print "updateProfile"
 	try:
 		queries.updateProfile(session['user_id'],data['first'],data['last'])

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block head %}
+<meta id="favr" data-name="{{json_fav}}">
 <style type="text/css">
     #resultSuccess {
         color: #006400; /* DarkGreen */
@@ -54,7 +55,10 @@
 		{% if key=='First Name' or key=='Last Name'%}
         
 		<input id="{{ key }}" class="sign-up-input navfont" type="text" value="{{ profile_data[key] }}" >
-        
+    {% elif key=='Active Status' %}
+      {% if profile_data[key]==True %}
+        <p class="navfont">Congrats!, you are an active user!</p>
+      {% endif %}
 		{% else %}
 		<p id="{{ key }}" class="navfont">{{ profile_data[key] }}</p>
 		{% endif %}
@@ -63,11 +67,26 @@
 	</div>
 {% endif %}
 {% endfor %}
+<p class="navfont"> Your favourite genres are : </p>
+
+<form action="#">
+{% for fav in favourites %}
+
+<p>
+<input type="checkbox" id="{{ fav }}" checked="True" />
+<label for="{{ fav }}" style="font-size: 24px;
+                              color: inherit;" >{{ fav }}</label>
+</p>
+
+{% endfor %}
+
+</form>
+
 	<p id="result" class="navfont center"></p>
   <div class="center" style="padding-right: 15%">
   <a href="/" class="navfont btn waves-effect green white-text" >Back</a>
 
-	<button style="margin-left: 5em" class="navfont btn waves-effect green white-text" onclick=updateData() >Update</button>
+	<button style="margin-left: 5em" class="navfont btn waves-effect green white-text" onclick="updateData()" >Update</button>
   </div>
 </div>
 
@@ -80,12 +99,22 @@ function updateData() {
             last = document.getElementById("Last Name").value,
             res = document.getElementById("result"),
             xhr = new XMLHttpRequest();
-
+  
         var params = {
             first : first,
-            last : last, 
+            last : last,             
+        }   
+
+        var favourites = $('#favr').data()['name'];
+        console.log(favourites)
+        
+
+        for(i in favourites) {
+          params[favourites[i]] = document.getElementById(favourites[i]).checked;
         }
+
         console.log(params)
+
         xhr.open('POST','/updateProfile',true);
         xhr.send(JSON.stringify(params));
         xhr.onreadystatechange = function(){

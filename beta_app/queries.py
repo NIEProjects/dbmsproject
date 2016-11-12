@@ -23,7 +23,7 @@ def getProfile(user_id):
     cur.execute("select username,first_name,last_name,strftime('%d-%m-%Y',date_of_birth),city, \
                  state from UserProfile where user_id=?",(user_id,))
     res = cur.fetchall()[0]
-    data = OrderedDict()
+    data = OrderedDict()    
     #All the values are declared sequentially to store the order of values
     data['Email'] = res[0]
     data['First Name'] = res[1]
@@ -31,9 +31,17 @@ def getProfile(user_id):
     data['Date of Birth'] = res[3]
     data['City'] = res[4]
     data['State'] = res[5]
-    
+    if user_id in getActiveUsers():
+        data['Active Status'] = True
+    else:
+        data['Active Status'] = False
+
+    cur.execute("""select genre from FavouriteGenres as f JOIN UserProfile as u
+                 where f.user_id = u.user_id""")
+    fav = cur.fetchall()
+    fav = [genre[0] for genre in fav]    
     closeDB(conn)
-    return data
+    return (data,fav)
 
 def insertProfile(username, first, last, dob, city, state, passwd):
     (conn,cur) = connectDB()
@@ -133,3 +141,13 @@ def getSongs():
     songslist = cur.fetchall()
     closeDB(conn)
     return songslist
+
+# Active users are defined as -> last_logged_in time within 1 week
+def getActiveUsers():
+    (conn,cur) = connectDB()
+    cur.execute("""select user_id from UserProfile where
+     ((strftime("%s","now")-strftime("%s",last_logged_in))/3600)<(24*7)""")
+    data = cur.fetchall()
+    data = [val[0] for val in data]
+    closeDB(conn)
+    return data      
