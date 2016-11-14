@@ -72,6 +72,7 @@
 
 <form action="#">
 {% for fav in favourites %}
+
   {% if favourites[fav] %}
   <p>
   <input type="checkbox" id="{{ fav }}" checked="True" />
@@ -108,6 +109,7 @@ function updateData() {
 	var first = document.getElementById("First Name").value,
             last = document.getElementById("Last Name").value,
             res = document.getElementById("result"),
+
             xhr = new XMLHttpRequest(), genreCount=0;
   
         var params = {
@@ -115,11 +117,14 @@ function updateData() {
             last : last,             
         }   
 
+
         var favourites = $("#favr").data()['name']
+
         console.log(favourites)
         
 
         for(i in favourites) {
+
           if(document.getElementById(favourites[i]).checked) {
               params['genre'+i] = favourites[i]; 
               genreCount++;      
@@ -127,6 +132,7 @@ function updateData() {
             }
         }
         params['genreCount'] = genreCount;
+
         console.log(params)
 
         xhr.open('POST','/updateProfile',true);

@@ -38,6 +38,7 @@ def getProfile(user_id):
 
     cur.execute("""select genre from FavouriteGenres as f JOIN UserProfile as u
                  where f.user_id = u.user_id""")
+
     tmp_fav = cur.fetchall()
     tmp_fav = [genre[0] for genre in tmp_fav]
     fav={}
@@ -46,6 +47,7 @@ def getProfile(user_id):
             fav[each_genre] = True
         else:
             fav[each_genre] = False
+
     closeDB(conn)
     return (data,fav)
 
@@ -169,6 +171,7 @@ def getSongs():
 
 def getGenres():
     return ['Classical','Patriotic','Devotional','Mild']
+
 # Active users are defined as -> last_logged_in time within 1 week
 def getActiveUsers():
     (conn,cur) = connectDB()
