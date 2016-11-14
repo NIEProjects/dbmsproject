@@ -18,7 +18,7 @@ CREATE TABLE UserProfile(
     date_of_birth date NOT NULL,
     city TEXT,
     state TEXT,
-    last_logged_in int(20),
+    last_logged_in NUMERIC,
     FOREIGN KEY(city) REFERENCES Places(city_name),
     FOREIGN KEY(state) REFERENCES States(state_name)
     );
@@ -49,8 +49,9 @@ CREATE TABLE Songs(
 CREATE TABLE FavouriteGenres(
     user_id int(20),
     genre TEXT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES UserProfile(user_id)
-    );
+    FOREIGN KEY(user_id) REFERENCES UserProfile(user_id),
+    PRIMARY KEY(user_id,genre)
+);
 
 CREATE TABLE Quotes(
     quote_id int(20) PRIMARY KEY,

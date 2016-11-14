@@ -23,7 +23,7 @@ def getProfile(user_id):
     cur.execute("select username,first_name,last_name,strftime('%d-%m-%Y',date_of_birth),city, \
                  state from UserProfile where user_id=?",(user_id,))
     res = cur.fetchall()[0]
-    data = OrderedDict()
+    data = OrderedDict()    
     #All the values are declared sequentially to store the order of values
     data['Email'] = res[0]
     data['First Name'] = res[1]
@@ -31,9 +31,23 @@ def getProfile(user_id):
     data['Date of Birth'] = res[3]
     data['City'] = res[4]
     data['State'] = res[5]
-    
+    if user_id in getActiveUsers():
+        data['Active Status'] = True
+    else:
+        data['Active Status'] = False
+
+    cur.execute("""select genre from FavouriteGenres as f JOIN UserProfile as u
+                 where f.user_id = u.user_id""")
+    tmp_fav = cur.fetchall()
+    tmp_fav = [genre[0] for genre in tmp_fav]
+    fav={}
+    for each_genre in getGenres():
+        if each_genre in tmp_fav:
+            fav[each_genre] = True
+        else:
+            fav[each_genre] = False
     closeDB(conn)
-    return data
+    return (data,fav)
 
 def insertProfile(username, first, last, dob, city, state, passwd):
     (conn,cur) = connectDB()
@@ -56,11 +70,30 @@ def insertProfile(username, first, last, dob, city, state, passwd):
         closeDB(conn)
     return True
 
-def updateProfile(user_id,first,last):
+def updateProfile(user_id,data):
     (conn,cur) = connectDB()
+    first = data['first']
+    last = data['last']
+    genreCount = data['genreCount']
+
     try:
         cur.execute("update UserProfile set first_name=? where user_id=?",(first,user_id))
-        cur.execute("update UserProfile set last_name=? where user_id=?",(last,user_id))
+        cur.execute("update UserProfile set last_name=? where user_id=?",(last,user_id))        
+        allGenres = getGenres()
+        userGenres=[]
+        for i in range(len(allGenres)):
+            try:
+                userGenres.append(data['genre'+str(i)])
+            except Exception as e:
+                print "Error in ",e
+        print "userGenres = ",userGenres
+        for each_genre in allGenres:
+            if each_genre in userGenres:
+                cur.execute("insert or replace into FavouriteGenres values(?,?)",(user_id,each_genre))
+                print "Insert ",each_genre
+            else:
+                cur.execute("delete from FavouriteGenres where user_id=? and genre=?",(user_id,each_genre))
+                print "Delete ",each_genre
         conn.commit()
     except Exception as e:
         print "Error in updateProfile query : ",e
@@ -133,3 +166,15 @@ def getSongs():
     songslist = cur.fetchall()
     closeDB(conn)
     return songslist
+
+def getGenres():
+    return ['Classical','Patriotic','Devotional','Mild']
+# Active users are defined as -> last_logged_in time within 1 week
+def getActiveUsers():
+    (conn,cur) = connectDB()
+    cur.execute("""select user_id from UserProfile where
+     ((strftime("%s","now")-strftime("%s",last_logged_in))/3600)<(24*7)""")
+    data = cur.fetchall()
+    data = [val[0] for val in data]
+    closeDB(conn)
+    return data      

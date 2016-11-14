@@ -2,7 +2,7 @@
 	padding: 10px;
 }
 .navfont{
-	font-size: 23px;
+	font-size: 23px !important;
 }
 #overlay {
   width: 100%;
