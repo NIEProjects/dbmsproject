@@ -37,25 +37,33 @@
                 <a href="#!" class="brand-logo center">&nbsp;&nbsp;Nanna Radio</a>
                  <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> 
 
-                <ul class="left hide-on-med-and-down">
-                    <li><a href="/" class="navfont">Home</a>
+                <ul class="left hide-on-med-and-down ">
+                    <li><a href="/" class="navfont waves-effect waves-light">Home</a>
                     </li>
-                    <li><a href="{{ url_for('radioplayer') }}" class="navfont">Radio</a>
+                    {% if session['user_id'] %}
+                    <li><a href="{{ url_for('radioplayer',val=0) }}" class="navfont waves-effect waves-light">Radio</a>
                     </li>
-                    <li><a href="{{ url_for('discoverview') }}" class="navfont">Discover</a>
+                    <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect waves-light">Discover</a>
                     </li>
+                    {% else %}                   
+                    <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Radio</a>
+                    </li>
+                    <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Discover</a>
+                    </li>
+                    {% endif %}
                     <li><a href="" class="navfont">Browse</a>
                     </li>
                 </ul>
+                
                 {% if session['user_id'] %}
 
                 <ul class="right hide-on-med-and-down">
-                    <li><a id="login" href="{{ url_for('logout') }}" class="navfont">Logout</a>
+                    <li><a id="login" href="{{ url_for('logout') }}" class="navfont waves-effect waves-light">Logout</a>
                     </li>
                 </ul>
                 
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('profile') }}" class="navfont">Profile</a>
+                    <li><a href="{{ url_for('profile') }}" class="navfont waves-effect waves-light">Profile</a>
                     </li>
                 </ul>                
 
@@ -79,25 +87,33 @@
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="/" class="navfont">Home</a>
                     </li>
-                    <li><a href="{{ url_for('radioplayer') }}" class="navfont">Radio</a>
+                    {% if session['user_id'] %}
+                    <li><a href="{{ url_for('radioplayer',val=0) }}" class="navfont waves-effect">Radio</a>
                     </li>
-                    <li><a href="{{ url_for('discoverview') }}" class="navfont">Discover</a>
+                    <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect">Discover</a>
                     </li>
+                    {% else %}
+                    
+                    <li><a class="navfont waves-effect" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Radio</a>
+                    </li>
+                    <li><a class="navfont waves-effect" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Discover</a>
+                    </li>
+                    {% endif %}
                     <li><a href="" class="navfont">Browse</a>
                     </li>
                     {% if session['user_id'] %}
                     
-                    <li><a href="{{ url_for('profile') }}" class="navfont">Profile</a>
+                    <li><a href="{{ url_for('profile') }}" class="navfont waves-effect">Profile</a>
                     </li>
                     
-                    <li><a href="{{ url_for('logout') }}" class="navfont">Logout</a>
+                    <li><a href="{{ url_for('logout') }}" class="navfont waves-effect">Logout</a>
                     </li>
                     {% endif %}
                     {% if not session['user_id'] %}
-                    <li><a href="{{ url_for('authpage') }}" class="navfont">Login</a>
+                    <li><a href="{{ url_for('authpage') }}" class="navfont waves-effect">Login</a>
                     </li>
 
-                    <li><a href="{{ url_for('signup') }}" class="navfont">New User</a>
+                    <li><a href="{{ url_for('signup') }}" class="navfont waves-effect">New User</a>
                     </li>
                     {% endif %}
                 </ul>

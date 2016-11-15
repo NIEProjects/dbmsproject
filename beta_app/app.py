@@ -139,14 +139,24 @@ def signup():
 def result(marks):
 	return render_template('scorecard.html', marks = marks)
 
-@app.route('/radio')
+#@app.route('/radio',defaults={'val':5})
+@app.route('/radio',methods=['GET'])
 def radioplayer():
-	songs_data = queries.getSongs()
+	val = int(request.args.get('val'))
+	if not is_loggedin(session['user_id']):
+		return redirect(url_for("homepage"))
+	songs_data = queries.getSongs(val,val+10)
 	return render_template('radio.html', songs=songs_data)
 
-@app.route('/discover')
+@app.route('/discover',methods=['GET'])
 def discoverview():
-	songs_data = queries.getSongs()
+	try:
+		val = int(request.args.get('val'))
+	except:
+		val = 0
+	if not is_loggedin(session['user_id']):
+		return redirect(url_for("homepage"))
+	songs_data = queries.getSongs(val,val+10)
 	shuffle(songs_data)
 	return render_template('discover.html', songs=songs_data)
 

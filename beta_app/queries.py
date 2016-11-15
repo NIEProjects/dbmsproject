@@ -135,7 +135,7 @@ def createToken(user_id):
     md5.update(str(user_id) + salt)
     token = md5.hexdigest()
     try:
-        cur.execute("INSERT INTO LoggedInUsers values(?,?)",(user_id,token))
+        cur.execute("INSERT or REPLACE INTO LoggedInUsers values(?,?)",(user_id,token))
         conn.commit()
     except Exception as e:
         print "Error in createToken",e
@@ -162,9 +162,9 @@ def logoutUser(user_id,token):
     return True
 
 # Queries related to songs
-def getSongs():
+def getSongs(min,max):
     (conn,cur) = connectDB()
-    cur.execute("select name,url,img_url from Songs")
+    cur.execute("select name,url,img_url from Songs where song_id between ? and ?",(min,max))
     songslist = cur.fetchall()
     closeDB(conn)
     return songslist
