@@ -157,7 +157,7 @@ def discoverview():
 	if not is_loggedin(session['user_id']):
 		return redirect(url_for("homepage"))
 	songs_data = queries.getSongs(val,val+10)
-	shuffle(songs_data)
+	# shuffle(songs_data)
 	return render_template('discover.html', songs=songs_data)
 
 

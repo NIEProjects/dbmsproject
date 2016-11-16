@@ -1,38 +1,127 @@
 {% extends "base.html" %}
 {% block title %}Discover{% endblock %}
 {% block head %}
+<link rel="stylesheet" type="text/css" href="css/audioplayer.css">
 	<style type="text/css">
 	
-		.container{
+		/*.container{
 			text-align: center;
-			/*border: 1px solid black;*/
+			border: 1px solid black;
 			padding: 10px;
+		}*/  
+		audio
+
+		{
+		-webkit-transition:all 0.5s linear;
+		-moz-transition:all 0.5s linear;
+		-o-transition:all 0.5s linear;
+		transition:all 0.5s linear;
+		-moz-box-shadow: 2px 2px 4px 0px #006773;
+		-webkit-box-shadow:  2px 2px 4px 0px #006773;
+		box-shadow: 2px 2px 4px 0px #006773;
+		-moz-border-radius:7px 7px 7px 7px ;
+		-webkit-border-radius:7px 7px 7px 7px ;
+		border-radius:7px 7px 7px 7px ;
 		}
+
+		audio:hover, audio:focus, audio:active
+		{
+		-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		-webkit-transform: scale(1.05);
+		-moz-transform: scale(1.05);
+		transform: scale(1.05);
+		}
+		
 	</style>
 {% endblock %}
 {% block body %}
 		<div class="container" id="container">
+		<br />		
+		<a id="prevBtn" onclick="prevPage()" class="navfont btn btn-flat waves-effect waves-green green white-text left">Prev </a>
+
+		<a id="nextBtn" onclick="nextPage()" class="navfont btn btn-flat waves-effect waves-green green white-text right">Next </a>
+		<br /><br /><br />
+		<div class="row">
 			{% for song in songs %}
-			<div class="col s12 m7">
-			  <div class="card horizontal">
+			<div class="col s12 m6">
+			  <div class="card horizontal small">
 			    <div class="card-image">
-			      <img src="{{ song[2] }}">
-			    </div>
+			      <img src="{{ song[2] }}" >
+			    </div>			    
 			    <div class="card-stacked">
 			      <div class="card-content">
-			        <p><h1>{{ song[0] }}</h1></p>
+			      	
+			        <p><h4>{{ song[0] }}</h4></p>
+			        
 			      </div>
-			      <div class="card-action">
-			        <a href="{{ song[1] }}">Play</a>
-			      </div>
-			    </div>
+			      <div class="card-action">			        
+			        <a name="{{ song[1] }}" class="btn btn-flat orange navfont" onclick="playSong(this.getAttribute('name'))">Play</a>
+			      </div>			    
+		      </div>
 			  </div>
 			</div>
 			{% endfor %}
-			
-			<a href="/discover?val=10" class="navfont btn btn-flat waves-effect waves-green green center">Next </a>
+		</div>
+			<a id="prevBtn2" onclick="prevPage()" class="navfont btn btn-flat waves-effect waves-green green white-text left">Prev </a>
+
+			<a id="nextBtn2" onclick="nextPage()" class="navfont btn btn-flat waves-effect waves-green green white-text right">Next </a>
+			<br /><br /><br />		
+			<!-- https://osvaldas.info/examples/audio-player-responsive-and-touch-friendly/ -->
+			<div class="audioplayer audioplayer-stopped">
+				<audio class="audioplayer" id="player"></audio>    
+			    <div class="audioplayer-playpause" title="Play"><a href="#">Play</a></div>
+			    <div class="audioplayer-time audioplayer-time-current">00:00</div>
+			    <div class="audioplayer-bar">
+			        <div class="audioplayer-bar-loaded"></div>
+			        <div class="audioplayer-bar-played"></div>
+			    </div>
+		    	<div class="audioplayer-time audioplayer-time-duration">&hellip;</div>
+			    <div class="audioplayer-volume">
+			        <div class="audioplayer-volume-button" title="Volume"><a href="#">Volume</a></div>
+			        <div class="audioplayer-volume-adjust"><div><div></div></div></div>
+			    </div>
+			</div>
 		</div>
 
 {% endblock %}
 {% block script %}
+
+<script type="text/javascript">
+	function nextPage() {		
+	    var val = parseInt(location.search.split('val=')[1]);
+	    /*If condition to handle NaN value for val*/
+	    if(!val)
+	    	val = 0;
+
+	    var nextBtn = document.getElementById("nextBtn");
+	    nextBtn.href = "/discover?val="+(val+10)
+
+	    var nextBtn2 = document.getElementById("nextBtn2");
+	    nextBtn2.href = "/discover?val="+(val+10)
+	}
+	function prevPage() {		
+	    var val = parseInt(location.search.split('val=')[1]);
+	    if(!val)
+	    	val = 10;	    
+	    var prevBtn = document.getElementById("prevBtn");
+	    prevBtn.href = "/discover?val="+(val-10)
+
+	    var prevBtn2 = document.getElementById("prevBtn2");
+	    prevBtn2.href = "/discover?val="+(val-10)
+	}
+
+	function playSong(song_url) {
+/*		var audio = new Audio(song_url);
+		audio.play();*/
+		
+		var player = document.getElementById("player");
+		player.pause();
+		player.innerHTML = "<source src=\""+song_url+"\" type='audio/mpeg'>\
+							No support for audio player"		 
+		player.load();
+		player.play();
+	}
+</script>
 {% endblock %}
