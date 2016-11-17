@@ -164,10 +164,13 @@ def logoutUser(user_id,token):
 # Queries related to songs
 def getSongs(min,max):
     (conn,cur) = connectDB()
-    cur.execute("select name,url,img_url from Songs where song_id between ? and ?",(min,max))
+    cur.execute("select name,url,img_url from Songs LIMIT ?,?",(min-1,max-min))
     songslist = cur.fetchall()
+    cur.execute("select count(song_id) from Songs");
+    songsCount = cur.fetchall()[0][0]
+    
     closeDB(conn)
-    return songslist
+    return (songslist,songsCount)
 
 def getGenres():
     return ['Classical','Patriotic','Devotional','Mild']

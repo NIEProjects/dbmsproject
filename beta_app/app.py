@@ -145,8 +145,8 @@ def radioplayer():
 	val = int(request.args.get('val'))
 	if not is_loggedin(session['user_id']):
 		return redirect(url_for("homepage"))
-	songs_data = queries.getSongs(val,val+10)
-	return render_template('radio.html', songs=songs_data)
+	(songs_data,songsCount) = queries.getSongs(val,val+10)
+	return render_template('radio.html', songs=songs_data, songs_count=songsCount)
 
 @app.route('/discover',methods=['GET'])
 def discoverview():
@@ -156,9 +156,10 @@ def discoverview():
 		val = 0
 	if not is_loggedin(session['user_id']):
 		return redirect(url_for("homepage"))
-	songs_data = queries.getSongs(val,val+10)
+	(songs_data,songsCount) = queries.getSongs(val,val+10)
+	print songs_data
 	# shuffle(songs_data)
-	return render_template('discover.html', songs=songs_data)
+	return render_template('discover.html', songs=songs_data, songs_count=songsCount)
 
 
 if __name__ == '__main__':
