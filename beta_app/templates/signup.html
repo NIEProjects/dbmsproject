@@ -26,13 +26,53 @@
     <input type="email" id="email" class="sign-up-input validate" placeholder="What's your email?" autofocus>
     <input type="text" id="first" class="sign-up-input" placeholder="First Name" autofocus>
     <input type="text" id="last" class="sign-up-input" placeholder="Last Name" autofocus>
-    <input type="text" id="datepicker" class="sign-up-input" placeholder="Date Of Birth" autofocus>    
+    <input type="text" id="datepicker" class="sign-up-input" placeholder="Date Of Birth" autofocus>   
+    <select id='state' class="sign-up-input" onchange="stateChanged()">
+    {% for state in states %}
+    <option value="{{state}}" >{{state}}</option>      
+    {% endfor %}
+    </select>
+
+    <select id='city' class="sign-up-input" >
+      
+    </select>
+
     <input type="password" id="passwd" class="sign-up-input" placeholder="Choose a password"> 
     <p id="result"></p>
     <button onclick=signup() class="sign-up-button" >Sign me up!</button>
   </div>
 
 <script type="text/javascript">
+    function stateChanged() {
+      var state = document.getElementById("state").value;
+      var city = document.getElementById("city");
+      var xhr = new XMLHttpRequest();
+      var cities = " ";
+      var params = {
+        state : state
+      }
+      xhr.open('POST',"/registration",true)
+      xhr.send(JSON.stringify(params));
+      xhr.onreadystatechange = function(){
+            if(xhr.readyState == 2 || xhr.readyState == 3){
+                
+            }
+            if(xhr.readyState == 4 && xhr.status == 200){
+                res = xhr.responseText;
+                res = JSON.parse(res);
+                console.log(res);
+                for(i in res) {
+                  cities = cities.concat("\n<option value=\"",res[i]);
+                  cities = cities.concat("\">",res[i]);
+                  cities = cities.concat("","</option>");                  
+                }
+                console.log(cities);
+                city.innerHTML = cities;
+            }
+        }
+
+        
+    }
     function signup() {
         var first = document.getElementById("first").value,
             last = document.getElementById("last").value,
@@ -40,8 +80,10 @@
             dob = document.getElementById("datepicker").value,
             passwd = document.getElementById("passwd").value,
             res = document.getElementById("result"),
-            xhr = new XMLHttpRequest();
-        console.log(email)
+            xhr = new XMLHttpRequest(),
+            state = document.getElementById("state").value,
+            city = document.getElementById("city").value;
+        
         if (!document.getElementById("email").validity.valid) {
             res.innerHTML = "Email is Invalid";
             return;
@@ -51,7 +93,9 @@
             first : first,
             last : last,
             dob : dob,
-            passwd : passwd
+            passwd : passwd,
+            state : state,
+            city : city
         }
         console.log(params)
         xhr.open('POST','/signupDB',true);

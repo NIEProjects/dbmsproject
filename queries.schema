@@ -79,7 +79,16 @@ CREATE TABLE LoggedInUsers(
     token TEXT NOT NULL UNIQUE,
     FOREIGN KEY(user_id) REFERENCES UserProfile(user_id)
     );
-    
+
+CREATE VIEW ActiveUsers as
+select user_id from UserProfile where
+((strftime("%s","now")-strftime("%s",last_logged_in))/3600)<(24*7);
+
+CREATE VIEW InactiveUsers as 
+select user_id from UserProfile
+EXCEPT
+select user_id from ActiveUsers; 
+
 CREATE TRIGGER updateLastLoggedIn
 after insert on LoggedInUsers
 for each row

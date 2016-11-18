@@ -51,6 +51,22 @@ def getProfile(user_id):
     closeDB(conn)
     return (data,fav)
 
+def getStates():
+    (conn,cur) = connectDB()
+    cur.execute("select state_name from States order by state_name")
+    states = cur.fetchall()
+    states = [ state[0] for state in states]
+    closeDB(conn)
+    return states
+    
+def getCities(state):
+    (conn,cur) = connectDB()
+    cur.execute("select city_name from Places where state_name=? order by city_name",(state,))
+    cities = cur.fetchall()
+    cities = [city[0] for city in cities]    
+    closeDB(conn)
+    return cities
+
 def insertProfile(username, first, last, dob, city, state, passwd):
     (conn,cur) = connectDB()
     user_id = int(time())
@@ -103,6 +119,15 @@ def updateProfile(user_id,data):
         raise e
     finally:
         closeDB(conn)
+
+def updatePopularity(song_url):
+    (conn,cur) = connectDB()
+    try:
+        cur.execute("update Songs set rating=rating+1 where url=?",(song_url,))
+        conn.commit()
+    except Exception as e:
+        print "Error in updatePopularity: ",e
+    closeDB(conn)
 
 def checkLogin(username,password):
     (conn,cur) = connectDB()
@@ -161,8 +186,22 @@ def logoutUser(user_id,token):
     closeDB(conn)
     return True
 
+def getQuotes():
+    (conn,cur) = connectDB()
+    cur.execute("select quote_url from quotes order by count limit 4")
+    quotes = cur.fetchall()
+    quotes = [quote[0] for quote in quotes]
+    try:
+        for quote in quotes:
+            cur.execute("update quotes set count=count+1 where quote_url=?",(quote,))
+        conn.commit()
+    except Exception as e:
+        print "Error in getQuotes : ",e
+    closeDB(conn)
+    return quotes
+    
 # Queries related to songs
-def getSongs(min,max):
+def getSongs(min,max,genre='all'):
     (conn,cur) = connectDB()
     cur.execute("select name,url,img_url from Songs LIMIT ?,?",(min-1,max-min))
     songslist = cur.fetchall()
@@ -173,13 +212,12 @@ def getSongs(min,max):
     return (songslist,songsCount)
 
 def getGenres():
-    return ['Classical','Patriotic','Devotional','Mild']
+    return ['Patriotic','Devotional','Mild','Bollywood Hits','Ghazal']
 
 # Active users are defined as -> last_logged_in time within 1 week
 def getActiveUsers():
     (conn,cur) = connectDB()
-    cur.execute("""select user_id from UserProfile where
-     ((strftime("%s","now")-strftime("%s",last_logged_in))/3600)<(24*7)""")
+    cur.execute("select * from ActiveUsers")
     data = cur.fetchall()
     data = [val[0] for val in data]
     closeDB(conn)

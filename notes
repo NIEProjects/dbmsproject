@@ -5,3 +5,15 @@ zip can be used in cursor.executemany()
 
 How to know whether a query is using INDEX or not?
 explain query plan select * from Places where state_name like "Kar%";
+
+To be done:
+
+5. Display results in discover based on city,state and popularity
+7. Create one playlist per user
+9. In the public home page, add an image frame by taking all screenshots
+
+11. Complete E-R diagram
+12. Add a search feature in Browse page.
+13. Create Users
+
+Deleted Feature = Buy songs

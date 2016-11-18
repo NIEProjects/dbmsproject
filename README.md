@@ -46,16 +46,15 @@ STD: Relation names begin with capital letter
 1. `UserProfile`(user_id(PK), username, first_name, last_name, date_of_birth, city(FK), state(FK), _favourites_(multivalued attribue))
 2. `Credentials` (user_id(FK), username(FK), MD5hash of password)
 3. `Songs`(song_id(PK), name, singer, film/album, genre, duration, price, popularity/rating, url, copies_sold)
-4. `Playlist`(user_id, song_id, song_name, duration) --> View
+4. `Playlist`(user_id, song_id)
 5. `FavouriteGenres`(user_id(FK), genre)
 6. `Quotes`(quote_id, quote, personality)
-7. `OrderInfo`(order_id,user_id(FK),song_id(FK),date_of_order)
-8. `ActiveUsers`(user_id(FK)) --> View using Union
-9. `InactiveUsers`(user_id(FK)) --> View using difference
-10. `Freebirds`(user_id(FK))  --> View using difference
-11. `Places`(city_name(PK),state_name(FK))
-12. `States`(state_name(PK))
-13. `SongTags`(song_id int(20)(FK), tag TEXT)
+7. `ActiveUsers`(user_id(FK)) --> View using Union
+8. `InactiveUsers`(user_id(FK)) --> View using difference
+
+9. `Places`(city_name(PK),state_name(FK))
+10. `States`(state_name(PK))
+11. `SongTags`(song_id int(20)(FK), tag TEXT)
 
 PS: Popularity is an integer value for the number of times played.
 
@@ -69,14 +68,12 @@ PS: Popularity is an integer value for the number of times played.
 `Songs`		--> name, singer, genre, language, duraition, popularity
 
 ##Union (Left, Full)
-Active users are those who have either listened to a song or bought a song.
+Active users are those who have either listened to a song within last week.
 
 ##Intersect
-Users who have listened to a song as well as bought a song (need not be the same song)
 
 ##Join
 Join `UserProfile` with `FavouriteGenres` and get the details of person
 
 ##Difference
 `InactiveUsers`  = All users - Active users
-`Freebirds`      = Listen - Buy

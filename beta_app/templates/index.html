@@ -18,8 +18,30 @@
 		 -->
         <h3>
 		{% if session['user_id'] %}
-  		Hari: Om {{ session['first'] }}!
+  		Welcome back {{ session['first'] }}!
+  		</h3>
+  		<div class="slider">
+            <ul class="slides">
+            {% for quote in quotes %}
+                <li>
+                    <img src="{{quote}}">
+                </li>               
+            {% endfor %}
+            </ul>
+        </div>
+        
 		{% endif %}
-		</h3>
+		
     </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+
+$(document).ready(function () {
+    // Plugin initialization
+    $('.slider').slider({full_width: true});
+})
+
+
+</script>
 {% endblock %}

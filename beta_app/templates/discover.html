@@ -14,17 +14,7 @@
 		-moz-border-radius:7px 7px 7px 7px ;
 		-webkit-border-radius:7px 7px 7px 7px ;
 		border-radius:7px 7px 7px 7px ;
-		}
-
-		audio:hover, audio:focus, audio:active
-		{
-		-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
-		-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
-		box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
-		-webkit-transform: scale(1.05);
-		-moz-transform: scale(1.05);
-		transform: scale(1.05);
-		}
+		}	
 
 		.audioPlayer {
 			position: fixed;
@@ -36,6 +26,7 @@
 
 		.container2 {
 			padding: 30px;
+			background-image: url(images/big_notes.jpg);
 		}
 	</style>
 {% endblock %}
@@ -121,15 +112,16 @@
 	}
 
 	function playSong(song_url) {
-/*		var audio = new Audio(song_url);
-		audio.play();*/
-		
 		var player = document.getElementById("player");
 		var songEntry = document.getElementById("songEntry");
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST','/discover',true)
+		xhr.send(song_url)
 		player.pause();
 		songEntry.src = song_url;
 		player.load();
 		player.play();
 	}
+
 </script>
 {% endblock %}

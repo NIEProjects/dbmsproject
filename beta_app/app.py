@@ -38,7 +38,8 @@ app.config.from_object(__name__)
 @app.route('/')
 def homepage():
 	print session
-	return render_template('index.html')
+	quotes = queries.getQuotes()
+	return render_template('index.html',quotes=quotes)
 
 # The below catch all function requires static_url_path = '' to be removed
 # @app.route('/', defaults={'path': ''})
@@ -131,9 +132,16 @@ def register():
 	else:
 		return "Registration Failed"
 
-@app.route('/registration')
-def signup():
-	return render_template('signup.html')
+@app.route('/registration',methods=['GET','POST'])
+def signup():	
+	states = queries.getStates()
+	if request.method == 'POST':
+		data = loads(request.data)
+		thisState = data['state']
+		cities = queries.getCities(thisState)
+		return dumps(cities)
+
+	return render_template('signup.html',states=states)
 
 @app.route('/results/<int:marks>')
 def result(marks):
@@ -148,8 +156,13 @@ def radioplayer():
 	(songs_data,songsCount) = queries.getSongs(val,val+10)
 	return render_template('radio.html', songs=songs_data, songs_count=songsCount)
 
-@app.route('/discover',methods=['GET'])
+@app.route('/discover',methods=['GET','POST'])
 def discoverview():
+	if request.method == 'POST':
+		song_name = request.data
+		print "song name = ",song_name
+		queries.updatePopularity(song_name)
+
 	try:
 		val = int(request.args.get('val'))
 	except:
