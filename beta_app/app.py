@@ -147,17 +147,35 @@ def signup():
 def result(marks):
 	return render_template('scorecard.html', marks = marks)
 
+@app.route('/updatePlaylist',methods=['POST'])
+def updatePlaylist():
+	data = loads(request.data)
+	print "data : ",data['song_id'],data['action']
+	queries.updatePlaylist(session['user_id'],data['song_id'],data['action'])
+	return "Done"	
 #@app.route('/radio',defaults={'val':5})
 @app.route('/radio',methods=['GET'])
 def radioplayer():
-	val = int(request.args.get('val'))
-	if not is_loggedin(session['user_id']):
-		return redirect(url_for("homepage"))
+	try:
+		if not is_loggedin(session['user_id']):
+			return redirect(url_for("homepage"))		
+	except:
+		return redirect(url_for("homepage"))	
+	try:
+		val = int(request.args.get('val'))
+	except:
+		val = 0
+	
 	(songs_data,songsCount) = queries.getSongs(val,val+10)
 	return render_template('radio.html', songs=songs_data, songs_count=songsCount)
 
 @app.route('/discover',methods=['GET','POST'])
 def discoverview():
+	try:
+		if not is_loggedin(session['user_id']):
+			return redirect(url_for("homepage"))		
+	except:
+		return redirect(url_for("homepage"))	
 	if request.method == 'POST':
 		song_name = request.data
 		print "song name = ",song_name
@@ -167,8 +185,7 @@ def discoverview():
 		val = int(request.args.get('val'))
 	except:
 		val = 0
-	if not is_loggedin(session['user_id']):
-		return redirect(url_for("homepage"))
+	
 	(songs_data,songsCount) = queries.getSongs(val,val+10)
 	print songs_data
 	# shuffle(songs_data)
@@ -176,6 +193,11 @@ def discoverview():
 
 @app.route('/browse',methods=['GET','POST'])
 def browseview():
+	try:
+		if not is_loggedin(session['user_id']):
+			return redirect(url_for("homepage"))		
+	except:
+		return redirect(url_for("homepage"))		
 	if request.method == 'POST':
 		data = request.form
 		print "Search : ",data['search']

@@ -46,14 +46,17 @@
                     </li>
                     <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect waves-light">Discover</a>
                     </li>
+                    <li><a href="{{ url_for('browseview') }}" class="navfont waves-effect waves-light">Browse</a>
+                    </li>
                     {% else %}                   
                     <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Radio</a>
                     </li>
-                    <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Discover</a>
+                    <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Discover</a>                    
+                    </li>
+                    <li><a class="navfont waves-effect waves-light" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Browse</a>
                     </li>
                     {% endif %}
-                    <li><a href="/browse" class="navfont">Browse</a>
-                    </li>
+                    
                 </ul>
                 
                 {% if session['user_id'] %}
@@ -93,14 +96,17 @@
                     </li>
                     <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect">Discover</a>
                     </li>
+                    <li><a href="{{ url_for('browseview') }}" class="navfont waves-effect">Browse</a>
+                    </li>
                     {% else %}
                     
                     <li><a class="navfont waves-effect" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Radio</a>
                     </li>
                     <li><a class="navfont waves-effect" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Discover</a>
                     </li>
+                    <li><a class="navfont waves-effect" onclick="Materialize.toast('Please Login to continue', 2000, 'rounded')">Browse</a>
+                    </li>
                     {% endif %}
-                    <li><a href="" class="navfont">Browse</a>
                     </li>
                     {% if session['user_id'] %}
                     

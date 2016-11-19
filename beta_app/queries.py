@@ -218,18 +218,27 @@ def search(name):
     for token in tokens:
         if len(token)<4:
             continue
-        cur.execute("select name,url from songs where name like '%"+token+"%' or singer like '%"+token+"%'")            
+        cur.execute("select name,url,songs.song_id from songs where name like '%"+token+"%' or singer like '%"+token+"%'")            
         #uses index on table songs
         results.append(cur.fetchall())
-        cur.execute("select name,url from songs join SongTags where songs.song_id=SongTags.song_id and tag like '%"+token+"%'")        
+        cur.execute("select name,url,songs.song_id from songs join SongTags where songs.song_id=SongTags.song_id and tag like '%"+token+"%'")        
         results.append(cur.fetchall())
     closeDB(conn)
     final_results={}
     for each_result in results:
-        for (k,v) in each_result:
-            final_results[k] = v
-    print final_results
+        for val in each_result:
+            final_results[val[0]] = (val[1],val[2])
+    
     return final_results
+
+def updatePlaylist(user_id,song_id,action):
+    (conn,cur) = connectDB()
+    if action == "add":
+        cur.execute("insert or replace into Playlists values(?,?)",(user_id,song_id))
+    elif action == "remove":
+        cur.execute("delete from Playlists where user_id=? and song_id=?",(user_id,song_id))
+    conn.commit()
+    closeDB(conn)    
 
 def getGenres():
     return ['Patriotic','Devotional','Mild','Bollywood Hits','Ghazal']

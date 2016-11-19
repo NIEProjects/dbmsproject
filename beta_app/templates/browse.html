@@ -24,11 +24,39 @@
   	{% for title in results %}  	
   		<li>
   			<span class="center navfont">
-  			<a href='{{results[title]}}'>{{title}}</a>
+  			<a href='{{results[title][0]}}'>{{title}}</a>
+  			<a onclick="addToBasket(this)" id='{{results[title][1]}}' class="right"> <i class="material-icons">add</i></a>
   			</span>
   		</li>
 	 {% endfor %}
   	</ol>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+	function addToBasket(obj) {
+		var xhr = new XMLHttpRequest();
+		var params = {
+			song_id : obj.id,
+			action : "add"
+		}
+		xhr.open('POST','/updatePlaylist',true);
+		xhr.send(JSON.stringify(params));
+
+		obj.setAttribute("onclick","removeFromBasket(this)");
+		obj.innerHTML = '<i class="material-icons">delete</i>'
+	}
+	function removeFromBasket(obj) {
+		var xhr = new XMLHttpRequest();
+		var params = {
+			song_id : obj.id,
+			action : "remove"
+		}
+		xhr.open('POST','/updatePlaylist',true);
+		xhr.send(JSON.stringify(params));
+		obj.setAttribute("onclick","addToBasket(this)");
+		obj.innerHTML = '<i class="material-icons">add</i>'
+	}
+</script>
 {% endblock %}
