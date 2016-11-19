@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Browse{% endblock %}
+
+{% block body %}
+<div class="container">
+<br />
+<span class="navfont center">
+<h2>Search</h2>
+</span>
+	<nav>
+    <div class="nav-wrapper white">
+      <form method="POST">
+        <div class="input-field">
+          <input id="search" name="search" type="search" required>
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>      
+        </div>
+      </form>
+    </div>
+  </nav>
+<!-- <a href="#!" class="btn" onclick="Materialize.showStaggeredList('#staggered-test')">Click Me</a> -->
+  <div class="searchResults">
+  	<ol class="navfont">
+  	{% for title in results %}  	
+  		<li>
+  			<span class="center navfont">
+  			<a href='{{results[title]}}'>{{title}}</a>
+  			</span>
+  		</li>
+	 {% endfor %}
+  	</ol>
+  </div>
+</div>
+{% endblock %}

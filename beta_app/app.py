@@ -174,6 +174,15 @@ def discoverview():
 	# shuffle(songs_data)
 	return render_template('discover.html', songs=songs_data, songs_count=songsCount)
 
+@app.route('/browse',methods=['GET','POST'])
+def browseview():
+	if request.method == 'POST':
+		data = request.form
+		print "Search : ",data['search']
+		results = queries.search(data['search'])		
+		print results
+		return render_template('browse.html',results=results)		
+	return render_template('browse.html')
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',threaded=True,debug=True)

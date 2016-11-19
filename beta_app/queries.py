@@ -188,7 +188,7 @@ def logoutUser(user_id,token):
 
 def getQuotes():
     (conn,cur) = connectDB()
-    cur.execute("select quote_url from quotes order by count limit 4")
+    cur.execute("select quote_url from QUOTES order by count limit 4")
     quotes = cur.fetchall()
     quotes = [quote[0] for quote in quotes]
     try:
@@ -210,6 +210,26 @@ def getSongs(min,max,genre='all'):
     
     closeDB(conn)
     return (songslist,songsCount)
+
+def search(name):
+    (conn,cur) = connectDB()
+    tokens = name.split(' ')
+    results = []
+    for token in tokens:
+        if len(token)<4:
+            continue
+        cur.execute("select name,url from songs where name like '%"+token+"%' or singer like '%"+token+"%'")            
+        #uses index on table songs
+        results.append(cur.fetchall())
+        cur.execute("select name,url from songs join SongTags where songs.song_id=SongTags.song_id and tag like '%"+token+"%'")        
+        results.append(cur.fetchall())
+    closeDB(conn)
+    final_results={}
+    for each_result in results:
+        for (k,v) in each_result:
+            final_results[k] = v
+    print final_results
+    return final_results
 
 def getGenres():
     return ['Patriotic','Devotional','Mild','Bollywood Hits','Ghazal']
