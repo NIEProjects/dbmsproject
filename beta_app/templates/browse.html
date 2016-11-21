@@ -24,9 +24,10 @@
   	{% for title in results %}  	
   		<li>
   			<span class="center navfont">
-  			<a href='{{results[title][0]}}'>{{title}}</a>
-  			<a onclick="addToBasket(this)" id='{{results[title][1]}}' class="right"> <i class="material-icons">add</i></a>
+  			<a href='{{results[title][0]}}'>{{title}}</a>  			
+  			<a href=#! onclick="addToBasket(this)" id='{{results[title][1]}}' class="right"> <i class="material-icons">add</i></a>
   			</span>
+  			
   		</li>
 	 {% endfor %}
   	</ol>
@@ -46,6 +47,7 @@
 
 		obj.setAttribute("onclick","removeFromBasket(this)");
 		obj.innerHTML = '<i class="material-icons">delete</i>'
+		Materialize.toast("Added to playlist",2000);
 	}
 	function removeFromBasket(obj) {
 		var xhr = new XMLHttpRequest();
@@ -57,6 +59,7 @@
 		xhr.send(JSON.stringify(params));
 		obj.setAttribute("onclick","addToBasket(this)");
 		obj.innerHTML = '<i class="material-icons">add</i>'
+		Materialize.toast("Removed from playlist",2000);
 	}
 </script>
 {% endblock %}

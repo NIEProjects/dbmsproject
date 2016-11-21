@@ -150,12 +150,21 @@ def result(marks):
 @app.route('/updatePlaylist',methods=['POST'])
 def updatePlaylist():
 	data = loads(request.data)
-	print "data : ",data['song_id'],data['action']
+	if data['action']=='flush':
+		queries.deletePlaylist(session['user_id'])
+		return "Deleted"
+	print "data : ",data['song_id'],data['action']	
+
 	queries.updatePlaylist(session['user_id'],data['song_id'],data['action'])
 	return "Done"	
-#@app.route('/radio',defaults={'val':5})
-@app.route('/radio',methods=['GET'])
+
+@app.route('/radioplayer')
 def radioplayer():
+	(songs_data,songsCount) = queries.getPlaylist(session['user_id'])
+	return render_template('radioplayer.html',songs=songs_data)
+
+@app.route('/radio',methods=['GET'])
+def radioview():
 	try:
 		if not is_loggedin(session['user_id']):
 			return redirect(url_for("homepage"))		
@@ -166,7 +175,9 @@ def radioplayer():
 	except:
 		val = 0
 	
-	(songs_data,songsCount) = queries.getSongs(val,val+10)
+	#if request.method == 'POST':
+
+	(songs_data,songsCount) = queries.getPlaylist(session['user_id'])
 	return render_template('radio.html', songs=songs_data, songs_count=songsCount)
 
 @app.route('/discover',methods=['GET','POST'])
@@ -186,7 +197,7 @@ def discoverview():
 	except:
 		val = 0
 	
-	(songs_data,songsCount) = queries.getSongs(val,val+10)
+	(songs_data,songsCount) = queries.getSongs(val,val+10,session['user_id'])
 	print songs_data
 	# shuffle(songs_data)
 	return render_template('discover.html', songs=songs_data, songs_count=songsCount)

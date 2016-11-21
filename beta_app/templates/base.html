@@ -42,7 +42,7 @@
                     <li><a href="/" class="navfont waves-effect waves-light">Home</a>
                     </li>
                     {% if session['user_id'] %}
-                    <li><a href="{{ url_for('radioplayer',val=0) }}" class="navfont waves-effect waves-light">Radio</a>
+                    <li><a href="{{ url_for('radioview',val=0) }}" class="navfont waves-effect waves-light">Radio</a>
                     </li>
                     <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect waves-light">Discover</a>
                     </li>
@@ -92,7 +92,7 @@
                     <li><a href="/" class="navfont">Home</a>
                     </li>
                     {% if session['user_id'] %}
-                    <li><a href="{{ url_for('radioplayer',val=0) }}" class="navfont waves-effect">Radio</a>
+                    <li><a href="{{ url_for('radioview',val=0) }}" class="navfont waves-effect">Radio</a>
                     </li>
                     <li><a href="{{ url_for('discoverview',val=0) }}" class="navfont waves-effect">Discover</a>
                     </li>

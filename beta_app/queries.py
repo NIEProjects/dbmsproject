@@ -92,11 +92,15 @@ def updateProfile(user_id,data):
     (conn,cur) = connectDB()
     first = data['first']
     last = data['last']
+    city = data['city']
+    state = data['state']
     genreCount = data['genreCount']
 
     try:
         cur.execute("update UserProfile set first_name=? where user_id=?",(first,user_id))
         cur.execute("update UserProfile set last_name=? where user_id=?",(last,user_id))        
+        cur.execute("update UserProfile set city=? where user_id=?",(city,user_id))
+        cur.execute("update UserProfile set state=? where user_id=?",(state,user_id))
         allGenres = getGenres()
         userGenres=[]
         for i in range(len(allGenres)):
@@ -201,15 +205,37 @@ def getQuotes():
     return quotes
     
 # Queries related to songs
-def getSongs(min,max,genre='all'):
+def getSongs(min,max,user_id):
     (conn,cur) = connectDB()
-    cur.execute("select name,url,img_url from Songs LIMIT ?,?",(min-1,max-min))
-    songslist = cur.fetchall()
-    cur.execute("select count(song_id) from Songs");
-    songsCount = cur.fetchall()[0][0]
-    
+    cur.execute("select genre from FavouriteGenres where user_id=?",(user_id,))
+    genres = cur.fetchall()
+    genres = [genre[0] for genre in genres] 
+    songslist = []
+    print "genres ",genres
+    for genre in genres:   
+        cur.execute("select name,url,img_url from Songs where genre=?",(genre,))
+        songslist.extend(cur.fetchall())
+
+    songsCount = len(songslist)
+    print songslist
     closeDB(conn)
-    return (songslist,songsCount)
+    return (songslist[min:max],songsCount)
+
+def getPlaylist(user_id):
+    (conn,cur) = connectDB()
+    cur.execute("select name,url,img_url from Songs where Songs.song_id in \
+                 (select song_id from Playlists where user_id=?)",(user_id,))
+    data = cur.fetchall()
+    count = len(data)
+    closeDB(conn)
+
+    return (data,count)
+
+def deletePlaylist(user_id):
+    (conn,cur) = connectDB()
+    cur.execute("delete from Playlists where user_id=?",(user_id,))
+    conn.commit()
+    closeDB(conn)
 
 def search(name,user_id):
     (conn,cur) = connectDB()
@@ -250,7 +276,7 @@ def deepSearch(name):
     tokens = name.split(' ')
     results = []
     for token in tokens:
-        if len(token)<4:
+        if len(token)<3:
             continue
         cur.execute("select name,url,songs.song_id from songs where name like '%"+token+"%' or singer like '%"+token+"%'")            
         #uses index on table songs

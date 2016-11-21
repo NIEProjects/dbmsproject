@@ -104,13 +104,17 @@
 function updateData() {
 	var first = document.getElementById("First Name").value,
             last = document.getElementById("Last Name").value,
+            city = document.getElementById("City").value,
+            state = document.getElementById("State").value,
             res = document.getElementById("result"),
 
             xhr = new XMLHttpRequest(), genreCount=0;
   
         var params = {
             first : first,
-            last : last,             
+            last : last,
+            city : city,
+            state: state             
         }   
 
 

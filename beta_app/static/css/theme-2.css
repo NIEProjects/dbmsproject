@@ -1,15 +1,14 @@
-* { padding: 0px; margin :0px; }
-body { background-color:#999999; font-family: SourceSansPro-Regular, Helvetica, Arial, 'sans-serif'; font-size: 14px; line-height: 1.428571429; }
-ul, li { list-style: none; }
-.mainContainer { margin:0 auto; width:800px }
+/*
+.mainContainer { margin:0 auto; width:800px ; font-family: SourceSansPro-Regular, Helvetica, Arial, 'sans-serif'; font-size: 14px; line-height: 1.428571429; }
 .containerPlayer, .containerSource { display:inline-block; float:left; padding:10px; margin:0px 10px; }
 
 .snippet { width:70%; border:1px solid #ccc; border-radius:5px; min-height:280px; max-height:280px; color:#fff; background-color:#343434; margin-top:1rem;  }
 .snippet:nth-child(2) { margin-top:2rem; }
 .snippet pre { max-height:230px; padding:5px; }
 .snippet h4 { padding:10px; color:#343434; background-color:#00bd9b; }
-
+*/
 /* Playlist */
+.playlistContainer { height: 500px; overflow-y: auto; }
 #listContainer { width:310px; background-color:#fafafa;  }
 #listContainer ul { background-color: #fafafa; clear: both; cursor: pointer;  }
 #listContainer li { padding:10px; }
@@ -17,10 +16,16 @@ ul, li { list-style: none; }
 #listContainer li:hover, #listContainer li:nth-child(even):hover { background-color:#00bd9b; color:#fff; }
 #listContainer li a { text-decoration: none; color:#4e4f4f; }
 #listContainer li.activeAudio { background-color:#00bd9b; }
-
+.audioPlayer {
+			position: fixed;
+			bottom: 0px;			
+			width: 95%;
+			left: 30px;
+			right: 25px;
+		}
 
 /* Player Controls */
-#playerContainer { width:310px; height:130px; background-color:#333333;  }
+/*#playerContainer { width:310px; height:130px; background-color:#333333;  }
 .controls li:first{margin-right:10px}
 .controls li { float:left; display:inline-block; width:50px; text-align:center; margin-top:8px;margin-left:10px }
 
@@ -53,4 +58,4 @@ input[type="range"] { -webkit-appearance: none; -moz-appearance: none; backgroun
 .songPlay { display:inline-block; }
 .seekableTrack { width: 0%; background-color:#666666; height: 4px; position: absolute; z-index: 0; display: block; }
 .seekableTrack, .progress .updateProgress { -webkit-transition: width 0.6s ease; -moz-transition: width 0.6s ease; -o-transition: width 0.6s ease; transition: width 0.6s ease; }
-
+*/

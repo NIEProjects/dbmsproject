@@ -1,27 +1,61 @@
 {% extends "base.html" %}
 {% block title %}Radio{% endblock %}
 {% block head %}
-	<style type="text/css">
-	
-		.container{
-			text-align: center;
-			/*border: 1px solid black;*/
-			padding: 10px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/theme-2.css" />
 {% endblock %}
 {% block body %}
-		<div class="container" id="container">
-		{% for song in songs %}
-		<div>
-			<h3>Song Title: {{ song[0] }}</h3>
-			<audio controls="true" >
-				<source src="{{ song[1] }}" type="audio/mp3">
-			</audio>
+<div class="container2">
+	<div class="left">
+		<div id="listContainer" class="playlistContainer">
+			<ul id="playListContainer">
+			{% for song in songs %}
+				 <li>
+					<a href="#" name="{{ song[1] }}" onclick="playSong(this)">
+						{{song[0]}}
+					</a>
+				</li>
+			{% endfor %}
+			</ul>
 		</div>
-		{% endfor %}
+	</div>
+	<div>
+		<div class="audioPlayer">	
+				<audio id="player" controls="controls" style="width: 100%;">
+					<source src="" id="songEntry" type='audio/mpeg'>
+				</audio>
 		</div>
+	</div>
+	<br><br><br>
+	<div class="center">
+		<a href="/browse" class="btn btn-flat green white-text navfont"">Add Songs to Playlist</a>
 
+		<a class="btn btn-flat red white-text navfont" onclick="deletePlaylist()">Delete Complete Playlist</a>
+	</div>
+</div>
 {% endblock %}
 {% block script %}
+<script type="text/javascript">
+function playSong(obj) {
+		var player = document.getElementById("player");
+		var songEntry = document.getElementById("songEntry");
+		var xhr = new XMLHttpRequest();
+		song_url = obj.name;
+		xhr.open('POST','/discover',true)
+		xhr.send(song_url)
+		player.pause();
+		songEntry.src = song_url;
+		player.load();
+		player.play();
+	}
+
+function deletePlaylist() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST','/updatePlaylist',true)
+	var params = {
+		action : "flush"
+	}
+	xhr.send(JSON.stringify(params))
+	window.location.href = window.location.href;
+}
+</script>
 {% endblock %}
