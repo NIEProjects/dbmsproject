@@ -45,27 +45,23 @@
 <img src="images/user-icon.png" height="100px" class="user-icon">
 {% for key in profile_data %}
 
-{% if profile_data[key] %}
 	<div class="row s12">
 		<div class="col s6">
 			<p class="navfont">{{ key }}</p>
 		</div>
 		<div class="col s6">
 
-		{% if key=='First Name' or key=='Last Name'%}
+		{% if key=='First Name' or key=='Last Name' or key=='City' or key=='State'%}
         
 		<input id="{{ key }}" class="sign-up-input navfont" type="text" value="{{ profile_data[key] }}" >
-    {% elif key=='Active Status' %}
-      {% if profile_data[key]==True %}
-        <p class="navfont">Congrats! you are an active user</p>
-      {% endif %}
+   
 		{% else %}
 		<p id="{{ key }}" class="navfont">{{ profile_data[key] }}</p>
 		{% endif %}
 
 		</div>	
 	</div>
-{% endif %}
+
 {% endfor %}
 
 <p class="navfont"> Your favourite genres are : </p>

@@ -31,10 +31,10 @@ def getProfile(user_id):
     data['Date of Birth'] = res[3]
     data['City'] = res[4]
     data['State'] = res[5]
-    if user_id in getActiveUsers():
-        data['Active Status'] = True
-    else:
-        data['Active Status'] = False
+    # if user_id in getActiveUsers():
+    #     data['Active Status'] = True
+    # else:
+    #     data['Active Status'] = False
 
     cur.execute("""select genre from FavouriteGenres as f JOIN UserProfile as u
                  where f.user_id = u.user_id""")
@@ -211,7 +211,41 @@ def getSongs(min,max,genre='all'):
     closeDB(conn)
     return (songslist,songsCount)
 
-def search(name):
+def search(name,user_id):
+    (conn,cur) = connectDB()
+    #this function will search tokens as a whole
+    tokens = name.split(' ')
+    results = []
+    count = len(tokens)
+    for i in range(0,count):
+        phrase = ' '.join(tokens[0:count-i])
+        print "phrase : ",phrase
+        #first search in playlists of others having same fingerprint
+        #step 1: select all user_id having same fingerprint
+        #step 2: select playlists of those whose use_id in step 1
+        #step 3: search for songs in that playlist by joining with songs 
+
+        cur.execute("""select name,url,song_id from
+                    (select name,url,song_id from Songs where song_id in
+                    (select song_id from Playlists where user_id in
+                    (select user_id from UserProfile
+                     where city in
+                     (select city from UserProfile
+                     where user_id=?)))) where name like '%"""+phrase+"%'",(user_id,))        
+        data = cur.fetchall()
+        if(data):
+            print "Quick Search!"
+            break
+    if not data:
+        print "Deep search"
+        return deepSearch(name)
+    else:
+        final_results = {}
+        for result in data:
+            final_results[result[0]] = (result[1],result[2])
+        return final_results
+
+def deepSearch(name):
     (conn,cur) = connectDB()
     tokens = name.split(' ')
     results = []
@@ -241,7 +275,7 @@ def updatePlaylist(user_id,song_id,action):
     closeDB(conn)    
 
 def getGenres():
-    return ['Patriotic','Devotional','Mild','Bollywood Hits','Ghazal']
+    return ['Patriotic','Devotional','Bollywood Hits','Ghazal']
 
 # Active users are defined as -> last_logged_in time within 1 week
 def getActiveUsers():

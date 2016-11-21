@@ -130,7 +130,7 @@ def register():
 	if res == True:
 		return "Registration Successful"
 	else:
-		return "Registration Failed"
+		return "Registration Failed, email exists"
 
 @app.route('/registration',methods=['GET','POST'])
 def signup():	
@@ -201,7 +201,7 @@ def browseview():
 	if request.method == 'POST':
 		data = request.form
 		print "Search : ",data['search']
-		results = queries.search(data['search'])		
+		results = queries.search(data['search'],session['user_id'])		
 		print results
 		return render_template('browse.html',results=results)		
 	return render_template('browse.html')

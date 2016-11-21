@@ -23,17 +23,17 @@
 <body>
   <div class="sign-up">
     <h1 class="sign-up-title">Sign up in seconds</h1>
-    <input type="email" id="email" class="sign-up-input validate" placeholder="What's your email?" autofocus>
-    <input type="text" id="first" class="sign-up-input" placeholder="First Name" autofocus>
+    <input type="email" id="email" class="sign-up-input validate" placeholder="What's your email?" autofocus required="">
+    <input type="text" id="first" class="sign-up-input" placeholder="First Name" autofocus required="">
     <input type="text" id="last" class="sign-up-input" placeholder="Last Name" autofocus>
-    <input type="text" id="datepicker" class="sign-up-input" placeholder="Date Of Birth" autofocus>   
-    <select id='state' class="sign-up-input" onchange="stateChanged()">
+    <input type="date" id="datepicker" class="sign-up-input validate" placeholder="Date Of Birth" autofocus required="">   
+    <select id='state' class="sign-up-input" onchange="stateChanged()" required="required">
     {% for state in states %}
     <option value="{{state}}" >{{state}}</option>      
     {% endfor %}
     </select>
 
-    <select id='city' class="sign-up-input" >
+    <select id='city' class="sign-up-input" required="required">
       
     </select>
 
@@ -86,6 +86,20 @@
         
         if (!document.getElementById("email").validity.valid) {
             res.innerHTML = "Email is Invalid";
+            return;
+        }
+        console.log(first);
+        if (first.value == '') {
+            res.innerHTML = "Please choose First Name";
+            return;
+        }
+        if (!datepicker.validity.valid) {
+            res.innerHTML = "Please Choose a Date";
+            return;
+        }
+
+        if (state.value == '') {
+            res.innerHTML = "Please choose which State";
             return;
         }
         var params = {
