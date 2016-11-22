@@ -52,6 +52,16 @@ The project has the following main modules :
 
 ### Related work and survey
 
+There are many prominent music streaming platforms already available but many have various limitations. Some of them are : 
+
+1. Spotify : Not available in India
+2. Google Play Music : Requires to upload card details before access.
+3. Itunes : Requires payment and limited to Apple devices.
+4. Amazon Prime : $99/year.
+5. Pandora : available only in USA, Australia and New Zealand.
+
+The closest competition to our project is from Saavn.com and Gaana.com but their websites are filled with distracting advertisements that spoil the user experience. Infact Gaana.com has audio advertisements playing in between songs which can be an unpleasant experience to user. Unless the user goes for paid version , this issue persists.
+
 ### System Analysis
 
 ### System Design
