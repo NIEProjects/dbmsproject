@@ -42,9 +42,9 @@ In the implementation stage the sculptor brings his ideas into existence. After 
 
 Another challenge in this stage is gaining descent performance and efficiency. The code has to be developed in such a way that the system produces expected results in the shortest possible time.
 
-The stages in implementation are as below:
+Ten stages [0-9] are illustrated below:
 
-Stage 1:	Connecting to the database
+Stage 0:	Connecting to the database
 
 Python program is used to connect to the sqlite3 database.
 
@@ -54,6 +54,33 @@ Py Code:
 	cursor = connection.cursor()
 
 The cursor object is used to execute any given query.
+
+Stage 1:	Registration
+
+Registration is required to obtain the necessary details of the user.
+The state and city details are used to provide the quick search feature as described later.
+
+The input fields are enclosed within a <div> tag to separately handle user input.
+
+Validity checks are made from point to point to ensure the legitimacy of the entered data.
+An example validity check in javascript is shown below.
+
+<script type="text/javascript">
+if (!datepicker.validity.valid) {
+            res.innerHTML = "Please Choose a Date";
+            return;
+        }
+</script>
+
+A POST request is made to insert the details into the database.
+xhr.open('POST','/signupDB',true);
+
+The queries used to insert data are:
+
+cur.execute("insert into UserProfile values (?,?,?,?,?,?,?,?)"
+            ,(user_id,username,first,last,dob,city,state,None))
+cur.execute("insert into Credentials values \
+            (?,?,?)",(user_id,username,hash_pass))
 
 Stage 2:	User Authentication
 
@@ -85,6 +112,16 @@ def login():
 		login_user(data['username'])
 
 The login_user function creates session cookies to store the information about user login.
+
+A trigger has been used to update the last_loggedin_time in the database.
+
+CREATE TRIGGER updateLastLoggedIn
+after insert on LoggedInUsers
+for each row
+begin
+update UserProfile set last_logged_in=datetime("now","localtime")
+where UserProfile.user_id=NEW.user_id;
+end;
 
 Stage 3:	Home Page
 
@@ -134,6 +171,9 @@ Jinja code is used to display the songs.
 	<!-- code to display songs in required format -->
 {% endfor %}
 
+The PLAY button is provided so that the user can listen to songs on the go.
+The <audio> tag has been used to play songs. </audio>
+
 Stage 6:	Browse Page
 
 Search feature is provied in the browse page. Two searching mode have been adopted in the backend.
@@ -158,6 +198,44 @@ cur.execute("""select name,url,song_id from
               where user_id=?)))) where name like '%"""+phrase+"%'",(user_id,))        
 
 Nested query is used here.
+
+The deep search feature is implemented by tokenizing the input and searching for tokens in all the tables including Song Name,Singer,Genre etc.
+The LIKE operator is used generously.
+
+The queries used are:
+
+cur.execute("select name,url,songs.song_id from songs where name like '%"+token+"%' or singer like '%"+token+"%'")
+
+cur.execute("select name,url,songs.song_id from songs join SongTags where songs.song_id=SongTags.song_id and tag like '%"+token+"%'")        
+
+After the user searches for a song, an option has been provided to add the song to playlist. The user can populate his/her playlist for later use.
+
+Stage 7:	Radio Page
+
+The radio page is provided to view the saved playlist. The user can listen to songs here as well. Two buttons are provided specially.
+1. Add songs to the playlist
+2. Delete complete playlist
+
+When the user clicks the first button he/she is directed to the Browse page.
+The second button is used to flush the playlist when a new playlist needs to be created.
+
+Stage 8:	Mobile optimization
+
+The website is designed to work on mobile devices as well. The Materialize CSS is used to take care of the viewport (size of the screen)..
+
+The <ul> tag has been used under the following tagline so that separate mobile view can be provided.
+
+<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+The login and signup pages are opened in a new tab instead as an overlay in case of mobile devices.
+
+Stage 9:	Logout
+
+Finally, after the user is satisfied and sufficiently entertained, Logout option has been provided so that nobody else can use his/her identity.
+
+The logout option, executes a query at the backend which deletes the secure token along with the user_id from the LoggedInUsers table.
+
+Once the user has been logged out, further login can be done at a later time.
 
 ### Sample Test Cases
 
