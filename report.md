@@ -37,11 +37,17 @@ Nanna Radio is a web application written for all kind of operating systems capab
 It also has strong security features , we encrypt all the user data including the password in the form of MD5 Hashes, that way it isn't accessible to even us. The Application has strong authentication features provided by facilities such as LogIn and SignUp.
 
 The project has the following main modules : 
+
 1) Insertion into and extraction from registered users using user friendly Sign Up and Sign In screen.
+
 2) The user's profile that contains user's general details along with his favourite genres and options to update them.
+
 3) RADIO area where one can listen to his playlist and add/delete songs to the playlist.
+
 4) DISCOVER area where the user can discover new songs based on smart recommendations.
+
 5) BROWSE area where a user can search for his favourite songs/ new songs.
+
 6) A home view that has daily inspirational qoutes generated at random every time.
 
 ### Related work and survey
