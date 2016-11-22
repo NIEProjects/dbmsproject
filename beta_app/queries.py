@@ -134,17 +134,24 @@ def updatePopularity(song_url):
     closeDB(conn)
 
 def checkLogin(username,password):
+    print "Check Login"
     (conn,cur) = connectDB()
     md5 = hashlib.md5()
     md5.update(password)
     hash_pass = md5.hexdigest()
-    cur.execute("select md5_passwd,user_id from Credentials\
+    try:
+        cur.execute("select md5_passwd,user_id from Credentials\
      where username=?",(username,))
-    res = cur.fetchall()
-    cur.execute("select first_name from UserProfile where user_id=?",(res[0][1],))
-    first = cur.fetchall()[0][0]
+        res = cur.fetchall()
+        cur.execute("select first_name from UserProfile where user_id=?",(res[0][1],))
+        first = cur.fetchall()[0][0]
+    except:
+        print "Login Error"        
+    finally:
+        closeDB(conn)
+        
     #print "Generated: ",res[0][0],"Required",hash_pass
-    closeDB(conn)
+
     try:
         if res[0][0] == hash_pass:
             #md5 match
@@ -210,14 +217,13 @@ def getSongs(min,max,user_id):
     cur.execute("select genre from FavouriteGenres where user_id=?",(user_id,))
     genres = cur.fetchall()
     genres = [genre[0] for genre in genres] 
-    songslist = []
-    print "genres ",genres
+    songslist = []    
     for genre in genres:   
         cur.execute("select name,url,img_url from Songs where genre=?",(genre,))
         songslist.extend(cur.fetchall())
 
     songsCount = len(songslist)
-    print songslist
+    # print songslist
     closeDB(conn)
     return (songslist[min:max],songsCount)
 
@@ -246,9 +252,9 @@ def search(name,user_id):
     for i in range(0,count):
         phrase = ' '.join(tokens[0:count-i])
         print "phrase : ",phrase
-        #first search in playlists of others having same fingerprint
+        #search in playlists of others having same fingerprint
         #step 1: select all user_id having same fingerprint
-        #step 2: select playlists of those whose use_id in step 1
+        #step 2: select playlists of those whose user_id in step 1
         #step 3: search for songs in that playlist by joining with songs 
 
         cur.execute("""select name,url,song_id from

@@ -2,12 +2,33 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 from json import loads,dumps
 from random import shuffle
 import queries
+from time import sleep
+from werkzeug.wsgi import LimitedStream
+
+# Code to avoid connection reset by peer error
+class StreamConsumingMiddleware(object):
+
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        stream = LimitedStream(environ['wsgi.input'],
+                               int(environ['CONTENT_LENGTH'] or 0))
+        environ['wsgi.input'] = stream
+        app_iter = self.app(environ, start_response)
+        try:
+            stream.exhaust()
+            for event in app_iter:
+                yield event
+        finally:
+            if hasattr(app_iter, 'close'):
+                app_iter.close()
 
 def login_user(user_tup):
 	print "login_user"
 	if user_tup == None:
 		return False
-		
+	
 	(user_id,username,first) = user_tup
 	tok = queries.createToken(user_id)
 	if tok:
@@ -41,13 +62,6 @@ def homepage():
 	quotes = queries.getQuotes()
 	return render_template('index.html',quotes=quotes)
 
-# The below catch all function requires static_url_path = '' to be removed
-# @app.route('/', defaults={'path': ''})
-# @app.route('/<path:path>')
-# def catch_all(path):
-# 	print "Catch all path requested = ",path
-# 	return render_template('index.html')
-
 @app.route('/auth/')
 def authpage():
 	return render_template('auth.html')
@@ -56,12 +70,14 @@ def authpage():
 def login():
 	print "login"
 	if request.method == 'POST':
-		print request.form		
+		#print request.form		
 		data={'username':request.form['username'],'password':request.form['password']}
 		print data
 		valid = queries.checkLogin(data['username'],data['password'])
-		
-		r = login_user(valid)
+		try:
+			r = login_user(valid)
+		except:
+			print "Login Error"
 
 		return redirect(url_for('homepage'))
 	else:
@@ -81,13 +97,6 @@ def logout():
 
 	# flash("Logged Out")
 	return redirect(url_for("homepage"))
-
-@app.route('/userhome')
-def userhome():	
-	if not is_loggedin(session['user_id']):
-		return redirect(url_for('homepage'))
-	print session
-	return render_template('userhome.html')
 
 @app.route('/profile')
 def profile():
@@ -116,7 +125,7 @@ def updateProfile():
 @app.route('/signupDB', methods=['POST'])
 def register():
 	data = loads(request.data)
-	print data
+	#print data
 	if "city" in data.keys():
 		pass
 	else:
@@ -130,7 +139,7 @@ def register():
 	if res == True:
 		return "Registration Successful"
 	else:
-		return "Registration Failed, email exists"
+		return "Registration Failed"
 
 @app.route('/registration',methods=['GET','POST'])
 def signup():	
@@ -143,10 +152,6 @@ def signup():
 
 	return render_template('signup.html',states=states)
 
-@app.route('/results/<int:marks>')
-def result(marks):
-	return render_template('scorecard.html', marks = marks)
-
 @app.route('/updatePlaylist',methods=['POST'])
 def updatePlaylist():
 	data = loads(request.data)
@@ -157,11 +162,6 @@ def updatePlaylist():
 
 	queries.updatePlaylist(session['user_id'],data['song_id'],data['action'])
 	return "Done"	
-
-@app.route('/radioplayer')
-def radioplayer():
-	(songs_data,songsCount) = queries.getPlaylist(session['user_id'])
-	return render_template('radioplayer.html',songs=songs_data)
 
 @app.route('/radio',methods=['GET'])
 def radioview():
@@ -198,7 +198,7 @@ def discoverview():
 		val = 0
 	
 	(songs_data,songsCount) = queries.getSongs(val,val+10,session['user_id'])
-	print songs_data
+	 #print songs_data
 	# shuffle(songs_data)
 	return render_template('discover.html', songs=songs_data, songs_count=songsCount)
 
@@ -213,9 +213,10 @@ def browseview():
 		data = request.form
 		print "Search : ",data['search']
 		results = queries.search(data['search'],session['user_id'])		
-		print results
+		#print results
 		return render_template('browse.html',results=results)		
 	return render_template('browse.html')
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',threaded=True,debug=True)
+	app.wsgi_app = StreamConsumingMiddleware(app.wsgi_app)
+	app.run(host='0.0.0.0',threaded=True,debug=True,port=5000)
