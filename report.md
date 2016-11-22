@@ -14,21 +14,41 @@ We also thank our colleagues who have helped in successful completion of the pro
 Finally we thank our families and friends for being a constant source of inspiration and advice.
   
 Mohd Sanad Zaki Rizvi
+
 Chaitanya S Lakkundi
 
 ### Abstract
 
 The music industry of the 21st century is in disarray because of new demands from consumers. Gone are the days of cassettes and tape recorders , consumers now expect to access their favourite music on the fly. To solve this problem, Nanna Radio is developed.
 
-Nanna Radio is a modern way of listening to music. It strives to provide an all inclusive platform to listen to your favourite songs and playlists(using Radio option), discover new songs based on smart recommendations (found through the Discover option) and search songs (using the Browse feature). To add further to the features , the user is greeted by daily inspirational qoutes that are generated at random at the home page. The user also has the option to create his own personal playlist and add/delete new songs to it.
-
-Feasibility study is conducted to determine whether the system is economically, technically and operationally feasible and user friendly. 
+Nanna Radio is a modern way of listening to music. It strives to provide an all inclusive platform to listen to your favourite songs and playlists, discover new songs based on smart recommendations and search songs . 
 
 The user requirements are analyzed to identify the information needs of the end users, the organization environment and the existing system. The user desires simplification and aggregation of services such as storing favourite songs, listening to songs, discovering new songs etc. The requirements have been analyzed and divided into small modules for easy access.
 	
 Databases are designed with care to accommodate growth in future. User friendly forms have been designed for data entry.  The system have been developed using procedural design. Number of validation checks has built in to ensure the integrity of data entry.
 
 ### Introduction
+
+The project titled Nanna Radio is an online music streaming platform. Its a web application for providing services as playlists, music streaming, discover new songs, search songs and inspirational qoutes . The project is developed in HTML5, CSS3, JavaScript, Materalize CSS at the front end and Python , Python Flask , SQlite3 at the back end for server and database. AJAX is used for linking the front end and back end using REST API(GET,POST,PUT,DELETE) calls. 
+
+
+Nanna Radio is a web application written for all kind of operating systems capable of running a web browser. Our software is easy to use for all kind of people, even people with little or no knowledge of computer operations. It features a familiar and well thought-out, an attractive user interface, combined with strong searching Insertion and reporting capabilities. 
+
+It also has strong security features , we encrypt all the user data including the password in the form of MD5 Hashes, that way it isn't accessible to even us. The Application has strong authentication features provided by facilities such as LogIn and SignUp.
+
+The project has the following main modules : 
+
+1) Insertion into and extraction from registered users using user friendly Sign Up and Sign In screen.
+
+2) The user's profile that contains user's general details along with his favourite genres and options to update them.
+
+3) RADIO area where one can listen to his playlist and add/delete songs to the playlist.
+
+4) DISCOVER area where the user can discover new songs based on smart recommendations.
+
+5) BROWSE area where a user can search for his favourite songs/ new songs.
+
+6) A home view that has daily inspirational qoutes generated at random every time.
 
 ### Related work and survey
 
