@@ -36,13 +36,9 @@ CREATE TABLE Songs(
     name TEXT NOT NULL,
     singer TEXT,
     film TEXT,
-    genre TEXT,
-    language TEXT,
-    duration float,
-    price float,
+    genre TEXT,            
     rating int(3),
-    url TEXT NOT NULL UNIQUE,
-    copies_sold int(10), 
+    url TEXT NOT NULL UNIQUE,    
     img_url TEXT default '/images/defaultsong.jpg'
     );
     
@@ -54,19 +50,10 @@ CREATE TABLE FavouriteGenres(
 );
 
 CREATE TABLE Quotes(
-    quote_id int(20) PRIMARY KEY,
-    quote_text TEXT NOT NULL,
-    personality TEXT
-    );
-
-CREATE TABLE OrderInfo(
-    order_id int(20) PRIMARY KEY,
-    user_id int(20),
-    song_id int(20),
-    date_of_order DATETIME,
-    FOREIGN KEY(user_id) REFERENCES UserProfile(user_id),
-    FOREIGN KEY(song_id) REFERENCES Songs(song_id)
-    );
+    quote_url TEXT,
+    personality TEXT,
+    count NUMBER
+);
     
 CREATE TABLE SongTags(
     song_id int(20),
@@ -96,3 +83,5 @@ begin
 update UserProfile set last_logged_in=datetime("now","localtime")
 where UserProfile.user_id=NEW.user_id;
 end;
+
+CREATE INDEX tag_i on SongTags (song_id);
