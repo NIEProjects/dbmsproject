@@ -1,54 +1,54 @@
 Report : Nanna Radio
 ====================
+### Cover Page including project title and NIE logo as given in template
 
 ### Acknowledgement
 
-We would like to express our sincere gratitude to all those who helped us in completing the project successfully. We express our profound thanks to Dr.G.L.Shekar, principal, NIE, Mysore for much moral support and encouragement.
-We are grateful to Dr. H D Phaneendra, Prof and Head of the department of computer science and engineering, NIE for support and encouragement in facilitating the progress of this work.
+We would like to express our sincere gratitude to all those who helped us in completing the project successfully. We express our profound thanks to Dr.G.L.Shekar, Principal, NIE, Mysore for much moral support and encouragement.
+We are grateful to Dr. H D Phaneendra, Prof and Head of the department of Computer Science and Engineering, NIE for support and encouragement in facilitating the progress of this work.
 
-The satisfaction that accompanies that the successful completion of any task would be incomplete without the mention of people whose ceaseless cooperation made it possible, whose constant guidance and encouragement crown all efforts with success.
+The satisfaction that accompanies the successful completion of any task would be incomplete without the mention of people whose ceaseless cooperation made it possible, whose constant guidance and encouragement crown all efforts with success.
 
-We are grateful to our project guides, Mr. Ramesh sir and Ms. Rani ma'am for the guidance, inspiration and constructive suggestions that was very helpful to us in the preparation of this project. 
+We are grateful to our project guides, Shri. Ramesh Sir and Ms. Rani madam for the guidance, inspiration and constructive suggestions which were very helpful to us in the preparation of this project. 
 We also thank our colleagues who have helped in successful completion of the project.
 
 Finally we thank our families and friends for being a constant source of inspiration and advice.
-  
-Mohd Sanad Zaki Rizvi
 
-Chaitanya S Lakkundi
+Chaitanya S Lakkundi                         Mohd Sanad Zaki Rizvi
+    4NI14CS027                                     4NI14CS048
+(let this be in left right form)
 
 ### Abstract
 
 The music industry of the 21st century is in disarray because of new demands from consumers. Gone are the days of cassettes and tape recorders , consumers now expect to access their favourite music on the fly. To solve this problem, Nanna Radio is developed.
 
-Nanna Radio is a modern way of listening to music. It strives to provide an all inclusive platform to listen to your favourite songs and playlists, discover new songs based on smart recommendations and search songs . 
+Nanna Radio is a modern way of listening to music. It strives to provide an all inclusive platform to listen to your favourite songs and playlists, discover new songs based on smart recommendations. 
 
-The user requirements are analyzed to identify the information needs of the end users, the organization environment and the existing system. The user desires simplification and aggregation of services such as storing favourite songs, listening to songs, discovering new songs etc. The requirements have been analyzed and divided into small modules for easy access.
+The users' requirements are analyzed to identify their needs. The user desires simplified aggregation of services such as storing favourite songs, listening to songs, discovering new songs etc. The requirements have been analyzed and divided into small modules for easy access.
 	
-Databases are designed with care to accommodate growth in future. User friendly forms have been designed for data entry.  The system have been developed using procedural design. Number of validation checks has built in to ensure the integrity of data entry.
+Databases are designed with care to accommodate growth in future. User friendly forms have been designed for data entry.  The systems have been developed using procedural design. Number of validation checks are built in to ensure the integrity of the data.
 
 ### Introduction
 
-The project titled Nanna Radio is an online music streaming platform. Its a web application for providing services as playlists, music streaming, discover new songs, search songs and inspirational qoutes . The project is developed in HTML5, CSS3, JavaScript, Materalize CSS at the front end and Python , Python Flask , SQlite3 at the back end for server and database. AJAX is used for linking the front end and back end using REST API(GET,POST,PUT,DELETE) calls. 
+The project titled Nanna Radio is an online music streaming platform. It is a web application for providing services such as music streaming, playlists, discover new songs, search songs and inspirational qoutes . The project is developed using HTML5, CSS3, JavaScript, Materalize CSS at the front end and Python , Python Flask , SQlite3 at the back end for server and database. AJAX is used for linking the front end and back end using REST API(GET,POST,PUT,DELETE) calls. 
 
+Nanna Radio is a web application designed for all kinds of operating systems capable of running a web browser. This software is easy to use for all kinds of people with little or no knowledge of computer operations. It features a familiar and well thought-out, an attractive user interface, combined with strong searching, insertion and reporting capabilities. 
 
-Nanna Radio is a web application written for all kind of operating systems capable of running a web browser. Our software is easy to use for all kind of people, even people with little or no knowledge of computer operations. It features a familiar and well thought-out, an attractive user interface, combined with strong searching Insertion and reporting capabilities. 
-
-It also has strong security features , we encrypt all the user data including the password in the form of MD5 Hashes, that way it isn't accessible to even us. The Application has strong authentication features provided by facilities such as LogIn and SignUp.
+It also has strong security features.
 
 The project has the following main modules : 
 
-1) Insertion into and extraction from registered users using user friendly Sign Up and Sign In screen.
+1) Insertion into and extraction from registered users using user friendly Sign Up and Log In screen.
 
-2) The user's profile that contains user's general details along with his favourite genres and options to update them.
+2) The user's profile that contains user's general details along with his/her favourite genres and options to update them.
 
-3) RADIO area where one can listen to his playlist and add/delete songs to the playlist.
+3) RADIO view where one can listen to his/her playlist and add/delete songs to the playlist.
 
-4) DISCOVER area where the user can discover new songs based on smart recommendations.
+4) DISCOVER view where the user can discover new songs based on smart recommendations.
 
-5) BROWSE area where a user can search for his favourite songs/ new songs.
+5) BROWSE view where a user can search for his/her favourite songs.
 
-6) A home view that has daily inspirational qoutes generated at random every time.
+6) A Home page that has daily inspirational qoutes generated at random every time.
 
 ### Related work and survey
 
@@ -63,8 +63,12 @@ There are many prominent music streaming platforms already available but many ha
 The closest competition to our project is from Saavn.com and Gaana.com but their websites are filled with distracting advertisements that spoil the user experience. Infact Gaana.com has audio advertisements playing in between songs which can be an unpleasant experience to user. Unless the user goes for paid version , this issue persists.
 
 ### System Analysis
+System requirements
+Proposed system
 
 ### System Design
+
+E-R diagram with some explanation
 
 ### System Implementation
 
@@ -157,7 +161,7 @@ Stage 3:	Home Page
 
 The homepage is displayed with a greeting. Mind enriching quotes are displayed. 
 
-The Quotes relation maintains a count of the number of times a quote is displayed. This ensures that the quotes are recycled every time and the same quote is displayed after a very long interval.
+The `Quotes` relation maintains a count of the number of times a quote is displayed. This ensures that the quotes are recycled every time and the same quote is displayed after a very long interval.
 
 Stage 4:	Profile page
 
@@ -269,7 +273,16 @@ Once the user has been logged out, further login can be done at a later time.
 
 ### Sample Test Cases
 
+To be done in the form of a table.
+Login, Search, Playlist test cases.
+
 ### Screen Shots
+
+Screenshots of all views
 
 ###References
 
+tutorialspoint.com
+stackoverflow.com
+w3schools.com
+materializecss.com
