@@ -1,8 +1,8 @@
-#DBMS Project
-##ನನ್ನ Radio
-##Nanna Radio
+# DBMS Project
+## ನನ್ನ Radio
+## Nanna Radio
 
-#Topics Proposed.
+# Topics Proposed.
 
 An online music streaming platform with the following features :
 
@@ -11,7 +11,7 @@ An online music streaming platform with the following features :
 3. Option to search music based on various filters like genre,language etc.
 4. Recently played songs
 
-#Technologies Used
+# Technologies Used
 
 1. Git 				: Code management
 2. Sqlite			: DBMS
@@ -19,7 +19,7 @@ An online music streaming platform with the following features :
 4. HTML5, CSS3 and Javascript 	: Frontend
 5. Inkscape 			: Drawing E-R Diagrams
 
-#Criteria For Project
+# Criteria For Project
 
 A mini project with the following goals :
 
@@ -29,7 +29,7 @@ A mini project with the following goals :
 4. Maintaining efficient queries
 5. Implementing advanced SQL concepts to better use and store the data
 
-#Features (from developers point of view)
+# Features (from developers point of view)
 
 1. Login
 2. Personal playlist
@@ -38,7 +38,7 @@ A mini project with the following goals :
 5. Listen or Buy songs
 6. Developer and User mode
 
-#Relations
+# Relations
 
 STD: Relation names begin with capital letter
 	 Column names begin with small letter and separated by underscore in case of composite name
@@ -58,22 +58,22 @@ STD: Relation names begin with capital letter
 
 PS: Popularity is an integer value for the number of times played.
 
-#Query types
+# Query types
 
-##Group By
+## Group By
 `Favourites`--> language or user_id
 `Profile`	--> state
 
-##Order By
+## Order By
 `Songs`		--> name, singer, genre, language, duraition, popularity
 
-##Union (Left, Full)
+## Union (Left, Full)
 Active users are those who have either listened to a song within last week.
 
-##Intersect
+## Intersect
 
-##Join
+## Join
 Join `UserProfile` with `FavouriteGenres` and get the details of person
 
-##Difference
+## Difference
 `InactiveUsers`  = All users - Active users
