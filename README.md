@@ -1,6 +1,5 @@
 # DBMS Project
-## ನನ್ನ Radio
-## Nanna Radio
+## ನನ್ನ Radio - Nanna Radio
 
 # Topics Proposed.
 
