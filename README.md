@@ -69,8 +69,6 @@ PS: Popularity is an integer value for the number of times played.
 ## Union (Left, Full)
 Active users are those who have either listened to a song within last week.
 
-## Intersect
-
 ## Join
 Join `UserProfile` with `FavouriteGenres` and get the details of person
 
